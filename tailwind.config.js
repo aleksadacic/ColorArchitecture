@@ -13,7 +13,7 @@ module.exports = {
     { pattern: /^border$/, variants: ['dark'] },
     { pattern: /^(bg|text|border|fill|stroke)-primary$/, variants: ['dark'] },
     {
-      pattern: /(bg|border|text|stroke|fill)-(light|dark)-(text|border|container|background|text-secondary)$/,
+      pattern: /(bg|border|text|stroke|fill)-(light|dark)-(text|border|container|background|text-secondary|text-tertiary|background-soft)$/,
       variants: ['dark'],
     },
   ],

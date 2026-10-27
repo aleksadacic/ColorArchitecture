@@ -10,9 +10,10 @@ item below is still present here and visible on screen, except those marked FIXE
    in dark mode tertiary text falls back to the light value (`#cacaca` instead of `#434347`).
    Demo: section 3 (`text.tertiary`) and section 4c. (Renamed in this demo's `tailwind.config.js`;
    the original RN repo still has the typo.)
-2. **Safelist misses tokens.** The `light|dark` safelist pattern omits `text-tertiary` and
+2. **FIXED in this demo.** **Safelist misses tokens.** The `light|dark` safelist pattern omits `text-tertiary` and
    `background-soft`. It only works because those strings also appear in scanned source. Add them or
-   drop the safelist.
+   drop the safelist. (Added to the safelist pattern in this demo's `tailwind.config.js` and `src/style.css`;
+   the original RN repo is unchanged.)
 3. **`dark:text-primary`, `dark:text-black`, `dark:text-white` etc. in `usePaletteClass`** are no-ops
    (same as the base class). Harmless, but noise.
 4. **`global.css` has `@tailwind base/components/utilities` twice** (top and bottom).
