@@ -14,8 +14,9 @@ item below is still present here and visible on screen, except those marked FIXE
    `background-soft`. It only works because those strings also appear in scanned source. Add them or
    drop the safelist. (Added to the safelist pattern in this demo's `tailwind.config.js` and `src/style.css`;
    the original RN repo is unchanged.)
-3. **`dark:text-primary`, `dark:text-black`, `dark:text-white` etc. in `usePaletteClass`** are no-ops
-   (same as the base class). Harmless, but noise.
+3. **FIXED in this demo.** **`dark:text-primary`, `dark:text-black`, `dark:text-white` etc. in `usePaletteClass`** are no-ops
+   (same as the base class). Harmless, but noise. (Removed from this demo's `usePaletteClass`;
+   the original RN repo is unchanged.)
 4. **`global.css` has `@tailwind base/components/utilities` twice** (top and bottom).
 5. **`usePaletteClass` memoizes static strings** on `scheme`. The memo does nothing.
 

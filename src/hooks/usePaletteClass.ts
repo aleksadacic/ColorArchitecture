@@ -10,11 +10,11 @@ export function usePaletteClass() {
     void scheme.value;
     return {
       text: {
-        primary: 'text-primary dark:text-primary',
+        primary: 'text-primary',
         typography: 'text-light-text dark:text-dark-text',
         typographyInverse: 'dark:text-light-text text-dark-text',
-        black: 'text-black dark:text-black',
-        white: 'text-white dark:text-white',
+        black: 'text-black',
+        white: 'text-white',
         secondary: 'text-light-text-secondary dark:text-dark-text-secondary',
         tertiary: 'text-light-text-tertiary dark:text-dark-text-tertiary',
         contrast: 'text-black dark:text-white',

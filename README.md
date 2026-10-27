@@ -25,6 +25,6 @@ npm run build   # vue-tsc + vite build
 - v4 ignores `safelist`, so its patterns are re-declared with `@source inline(...)` in `src/style.css`.
 - `darkMode: 'class'` is re-declared with `@custom-variant dark`; `App.vue` toggles `.dark` on `<html>`.
 
-Deliberate deviations: the `light-dark-tertiary` token typo (bug 1 in `FIXES.md`) is fixed here as `dark-text-tertiary`, and the safelist now includes `text-tertiary` and `background-soft` (bug 2).
+Deliberate deviations: the `light-dark-tertiary` token typo (bug 1 in `FIXES.md`) is fixed here as `dark-text-tertiary`, and the safelist now includes `text-tertiary` and `background-soft` (bug 2), and the no-op `dark:` classes are removed from `usePaletteClass` (bug 3).
 
 See `FIXES.md` for what I would change.
