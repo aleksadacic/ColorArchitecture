@@ -47,9 +47,6 @@ const classGroups = computed(() =>
           </span>
           <h1 class="text-lg font-black tracking-tight">Color architecture</h1>
         </div>
-        <span class="hidden text-sm text-light-text-secondary dark:text-dark-text-secondary sm:inline">
-          effective theme: <b class="text-light-text dark:text-dark-text">{{ scheme }}</b>
-        </span>
         <div class="ml-auto flex gap-1 rounded-xl bg-light-background-soft p-1 dark:bg-dark-background-soft">
           <button
             v-for="t in themes"
@@ -82,13 +79,6 @@ const classGroups = computed(() =>
       </aside>
 
       <main class="flex min-w-0 flex-col gap-6">
-        <div class="rounded-3xl bg-primary px-6 py-8 text-white sm:px-8">
-          <h2 class="text-3xl font-black tracking-tight sm:text-4xl">Every way a color reaches the screen.</h2>
-          <p class="mt-2 max-w-2xl text-primary-50">
-            A faithful port of the cimicimi color setup. Flip the theme and watch which methods follow, and which don't.
-          </p>
-        </div>
-
 <Section id="raw" num="1" title="Raw Colors constants" code="style=&quot;background: Colors.x&quot;" note="Not theme-aware: a fixed value regardless of mode.">
       <Swatch v-for="[k, v] in rawBrand" :key="k" :label="`Colors.${k}`" :value="v" :swatch-style="{ background: v }" />
     </Section>
