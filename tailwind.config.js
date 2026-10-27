@@ -44,7 +44,7 @@ module.exports = {
 
         'dark-text': Colors.dark.text,
         'dark-text-secondary': Colors.dark.textSecondary,
-        'light-dark-tertiary': Colors.dark.textTertiary,
+        'dark-text-tertiary': Colors.dark.textTertiary,
         'dark-border': Colors.dark.border,
         'dark-container': Colors.dark.container,
         'dark-background': Colors.dark.background,

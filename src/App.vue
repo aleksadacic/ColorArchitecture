@@ -113,13 +113,12 @@ const classGroups = computed(() =>
       id="tailwind-4c"
       num="4c"
       title="Gaps in the Tailwind mapping"
-      code="status colors have no classes; dark tertiary token is misnamed"
+      code="status colors have no classes"
       note="Expect: blank chips where a class does not resolve."
     >
       <Swatch label="bg-success (missing)" swatch-class="bg-success" />
       <Swatch label="bg-error (missing)" swatch-class="bg-error" />
-      <Swatch label="dark:text-dark-text-tertiary (typo: unresolved)" swatch-class="text-2xl font-bold bg-black text-dark-text-tertiary">Aa</Swatch>
-      <Swatch label="text-light-dark-tertiary (actual name)" swatch-class="text-2xl font-bold bg-black text-light-dark-tertiary">Aa</Swatch>
+      <Swatch label="text-dark-text-tertiary (fixed)" swatch-class="text-2xl font-bold bg-black text-dark-text-tertiary">Aa</Swatch>
     </Section>
 
     <Section id="alpha" num="5" title="Hand-written alpha literals" code="rgba(255,51,25,0.14) copied from primary" note="Used by TSwitch / ContractCard; will not follow a primary change.">

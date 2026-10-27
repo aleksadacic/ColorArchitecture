@@ -1,14 +1,15 @@
 # What I would fix
 
 Source: `cimicimi-mobile/cimicimi` (RN/Expo + NativeWind). This demo is a **faithful port**, so every
-item below is still present here and visible on screen. Section numbers refer to the demo page.
+item below is still present here and visible on screen, except those marked FIXED. Section numbers refer to the demo page.
 
 ## Bugs
 
-1. **Token typo: `'light-dark-tertiary'`** (`tailwind.config.js`). Should be `'dark-text-tertiary'`.
+1. **FIXED in this demo.** **Token typo: `'light-dark-tertiary'`** (`tailwind.config.js`). Should be `'dark-text-tertiary'`.
    `usePaletteClass().text.tertiary` emits `dark:text-dark-text-tertiary`, which does not exist, so
    in dark mode tertiary text falls back to the light value (`#cacaca` instead of `#434347`).
-   Demo: section 3 (`text.tertiary`) and section 4c.
+   Demo: section 3 (`text.tertiary`) and section 4c. (Renamed in this demo's `tailwind.config.js`;
+   the original RN repo still has the typo.)
 2. **Safelist misses tokens.** The `light|dark` safelist pattern omits `text-tertiary` and
    `background-soft`. It only works because those strings also appear in scanned source. Add them or
    drop the safelist.
