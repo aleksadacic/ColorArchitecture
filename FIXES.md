@@ -8,7 +8,7 @@ item below is still present here and visible on screen, except those marked FIXE
 1. **FIXED in this demo.** **Token typo: `'light-dark-tertiary'`** (`tailwind.config.js`). Should be `'dark-text-tertiary'`.
    `usePaletteClass().text.tertiary` emits `dark:text-dark-text-tertiary`, which does not exist, so
    in dark mode tertiary text falls back to the light value (`#cacaca` instead of `#434347`).
-   Demo: section 3 (`text.tertiary`) and section 4c. (Renamed in this demo's `tailwind.config.js`;
+   Demo: section 3c. (Renamed in this demo's `tailwind.config.js`;
    the original RN repo still has the typo.)
 2. **FIXED in this demo.** **Safelist misses tokens.** The `light|dark` safelist pattern omits `text-tertiary` and
    `background-soft`. It only works because those strings also appear in scanned source. Add them or
@@ -20,8 +20,8 @@ item below is still present here and visible on screen, except those marked FIXE
 4. **RN only, not in this demo.** **`global.css` has `@tailwind base/components/utilities` twice** (top and bottom).
    The demo's `src/style.css` uses a single Tailwind 4 `@import 'tailwindcss'`, so there is nothing to fix here.
 5. **FIXED in this demo.** **`usePaletteClass` memoizes static strings** on `scheme`. The memo does nothing.
-   (In this demo the hook is replaced by the static `ColorClass` constant in
-   `src/constants/ColorClass.ts`; the original RN repo is unchanged.)
+   (In this demo the hook was first replaced by a static constant, then removed entirely in item 10;
+   the original RN repo is unchanged.)
 
 ## Architecture
 
@@ -37,7 +37,7 @@ item below is still present here and visible on screen, except those marked FIXE
    (In this demo `Colors.ts` exports `PrimaryRamp`; `Colors.primary`/`primary200`/`primary300` and
    Tailwind's `primary` colors read from it. The original RN repo is unchanged.)
 8. **FIXED in this demo.** **Status colors (`success/info/warning/error/hint`) have no Tailwind classes.**
-   Class-based code cannot use them. Demo: section 4c.
+   Class-based code cannot use them. Demo: section 3c.
    (In this demo every fixed `Colors` value other than the primary ramp gets a generated class:
    `bg-success`, `text-error`, `bg-message-sent-background`, etc. The original RN repo is unchanged.)
 9. **FIXED in this demo.** **Theme is encoded in token names** (`light-text` + `dark:dark-text`). Every use needs a pair,
@@ -46,16 +46,19 @@ item below is still present here and visible on screen, except those marked FIXE
    `usePaletteClass` can go away.
    (In this demo Tailwind generates `bg-canvas`, `text-foreground-muted`, `border-border`, etc. backed by
    `--theme-*` variables, set from `Colors.light` on `:root` and `Colors.dark` on `.dark` by a plugin in
-   `tailwind.config.js`. The demo's own layout uses them; section 4d shows them. Prefixed `--theme-` so
-   they don't collide with the dead shadcn variables from item 12. The `light-*`/`dark-*` tokens and
-   `ColorClass` are kept for comparison; removing them is item 10. The original RN repo is unchanged.)
-10. **Two competing consumption styles** for classes (`usePaletteClass` vs hand-written `dark:`; 44
+   `tailwind.config.js`. The demo's own layout uses them; section 3d shows them. Prefixed `--theme-` so
+   they don't collide with the dead shadcn variables from item 12. The `light-*`/`dark-*` tokens are kept
+   so section 3b can show the old style. The original RN repo is unchanged.)
+10. **FIXED in this demo.** **Two competing consumption styles** for classes (`usePaletteClass` vs hand-written `dark:`; 44
     `dark:` uses in the RN app). Pick one.
+    (In this demo the class lookup object is removed: after item 9 every entry was a class string that
+    can be written directly, and themed colors collapse to one semantic class. Classes are written
+    directly; `dark:` is for one-off deviations only. The original RN repo is unchanged.)
 11. **Hand-copied alpha literals** (`rgba(255,51,25,.14)`, `.30`, black scrims). Add
-    `withAlpha(color, a)` and named overlay tokens. Demo: section 5.
+    `withAlpha(color, a)` and named overlay tokens. Demo: section 4.
 12. **Dead shadcn/gluestack CSS variables in `global.css`.** Nothing in the RN app reads them (and
     their `--primary` is grey, unrelated to the brand). Delete, or make them the real semantic
-    layer from item 9. Demo: section 6.
+    layer from item 9. Demo: section 5.
 13. **FIXED in this demo.** **Inverted dark naming.** Dark `container` (`#000`) is darker than dark `background`
     (`#1e1c1e`); light is the opposite. Rename (`surface`/`sunken`) or document it.
     (The values are consistent: in both themes `container` is the page and `background` is one step

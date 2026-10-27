@@ -32,7 +32,7 @@ Numbers refer to `FIXES.md`.
 - **1:** the `light-dark-tertiary` token typo is fixed as `dark-text-tertiary`.
 - **2:** the safelist includes `text-tertiary` and `background-soft`.
 - **3:** the no-op `dark:` classes are removed from `usePaletteClass`.
-- **5:** `usePaletteClass` is replaced by the static `ColorClass` constant in `src/constants/ColorClass.ts`.
+- **5, 10:** `usePaletteClass` is removed; classes are written directly, with semantic classes for themed colors.
 - **6, 15:** the `light-*`/`dark-*` Tailwind tokens and `usePalette` are generated from `Colors` instead of listed by hand.
 - **7:** the `primary` 50-950 ramp lives in `Colors.ts` as `PrimaryRamp`; `Colors.primary*` and Tailwind read from it.
 - **8:** status and other fixed brand colors (`success`, `info`, `warning`, `error`, `hint`, `messageSentBackground`) have generated Tailwind classes.

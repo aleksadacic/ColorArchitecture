@@ -4,7 +4,6 @@ import { computed, watchEffect } from 'vue';
 import Section from '@/components/Section.vue';
 import Swatch from '@/components/Swatch.vue';
 import { Colors, PrimaryRamp } from '@/constants/Colors';
-import { ColorClass } from '@/constants/ColorClass';
 import { useEffectiveColorScheme } from '@/hooks/useEffectiveColorScheme';
 import { usePalette } from '@/hooks/usePalette';
 import { setThemeSetting, themeSetting, ThemeSetting } from '@/stores/useAppPreferencesStore';
@@ -18,10 +17,9 @@ watchEffect(() => document.documentElement.classList.toggle('dark', scheme.value
 const nav = [
   ['raw', '1', 'Raw constants'],
   ['palette', '2', 'usePalette()'],
-  ['class', '3', 'ColorClass'],
-  ['tailwind', '4', 'Direct Tailwind'],
-  ['alpha', '5', 'Alpha literals'],
-  ['vars', '6', 'CSS variables'],
+  ['tailwind', '3', 'Direct Tailwind'],
+  ['alpha', '4', 'Alpha literals'],
+  ['vars', '5', 'CSS variables'],
 ] as const;
 const themes: ThemeSetting[] = ['system', 'light', 'dark'];
 const rawBrand = Object.entries(Colors).filter(([, v]) => typeof v === 'string') as [string, string][];
@@ -29,9 +27,6 @@ const rawLight = Object.entries(Colors.light);
 const rawDark = Object.entries(Colors.dark);
 const paletteEntries = computed(() => Object.entries(palette.value));
 const ramp = Object.keys(PrimaryRamp);
-const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
-  Object.entries(m).map(([k, cls]) => ({ id: `${group}.${k}`, cls })),
-);
 </script>
 
 <template>
@@ -90,18 +85,10 @@ const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
       <Swatch v-for="[k, v] in paletteEntries" :key="k" :label="`palette.${k}`" :value="v" :swatch-style="{ background: v }" />
     </Section>
 
-    <Section id="class" num="3" title="ColorClass" code=":class=&quot;ColorClass.group.key&quot;" note="Backgrounds use bg-*; text entries show 'Aa'; borders show an outline.">
-      <Swatch v-for="c in classGroups" :key="c.id" :label="c.id" :value="c.cls">
-        <span :class="c.id.startsWith('text') ? [c.cls, 'text-2xl font-bold bg-gray-400/30 px-2 rounded'] : c.cls" class="w-full h-full flex items-center justify-center">
-          {{ c.id.startsWith('text') ? 'Aa' : '' }}
-        </span>
-      </Swatch>
-    </Section>
-
-    <Section id="tailwind" num="4a" title="Direct Tailwind: primary ramp" code="bg-primary-500 (generated from PrimaryRamp in Colors.ts)">
+    <Section id="tailwind" num="3a" title="Direct Tailwind: primary ramp" code="bg-primary-500 (generated from PrimaryRamp in Colors.ts)">
       <Swatch v-for="s in ramp" :key="s" :label="`primary-${s}`" :swatch-class="`bg-primary-${s}`" />
     </Section>
-    <Section id="tailwind-4b" num="4b" title="Direct Tailwind: light-/dark- tokens" code="bg-light-canvas dark:bg-dark-canvas">
+    <Section id="tailwind-3b" num="3b" title="Direct Tailwind: light-/dark- tokens" code="bg-light-canvas dark:bg-dark-canvas">
       <Swatch label="canvas" swatch-class="bg-light-canvas dark:bg-dark-canvas" />
       <Swatch label="surface" swatch-class="bg-light-surface dark:bg-dark-surface" />
       <Swatch label="surface-muted" swatch-class="bg-light-surface-muted dark:bg-dark-surface-muted" />
@@ -109,8 +96,8 @@ const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
       <Swatch label="foreground-muted" swatch-class="text-2xl font-bold text-light-foreground-muted dark:text-dark-foreground-muted">Aa</Swatch>
     </Section>
     <Section
-      id="tailwind-4c"
-      num="4c"
+      id="tailwind-3c"
+      num="3c"
       title="Direct Tailwind: status and brand colors"
       code="bg-success (generated from Colors in tailwind.config.js)"
       note="These had no classes in the RN config; now every fixed Colors value has one."
@@ -124,11 +111,11 @@ const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
       <Swatch label="text-dark-foreground-subtle (fixed)" swatch-class="text-2xl font-bold bg-black text-dark-foreground-subtle">Aa</Swatch>
     </Section>
     <Section
-      id="tailwind-4d"
-      num="4d"
+      id="tailwind-3d"
+      num="3d"
       title="Direct Tailwind: semantic tokens"
       code="bg-canvas (var(--theme-canvas), set per theme)"
-      note="One class per role, no dark: pair. Same colors as 4b; flips with the toggle."
+      note="One class per role, no dark: pair. Same colors as 3b; flips with the toggle."
     >
       <Swatch label="bg-canvas" swatch-class="bg-canvas" />
       <Swatch label="bg-surface" swatch-class="bg-surface" />
@@ -139,13 +126,13 @@ const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
       <Swatch label="text-foreground-subtle" swatch-class="text-2xl font-bold text-foreground-subtle">Aa</Swatch>
     </Section>
 
-    <Section id="alpha" num="5" title="Hand-written alpha literals" code="rgba(255,51,25,0.14) copied from primary" note="Used by TSwitch / ContractCard; will not follow a primary change.">
+    <Section id="alpha" num="4" title="Hand-written alpha literals" code="rgba(255,51,25,0.14) copied from primary" note="Used by TSwitch / ContractCard; will not follow a primary change.">
       <Swatch label="primary @ 0.14" value="rgba(255, 51, 25, 0.14)" :swatch-style="{ background: 'rgba(255, 51, 25, 0.14)' }" />
       <Swatch label="primary @ 0.30" value="rgba(255,51,25,0.30)" :swatch-style="{ background: 'rgba(255,51,25,0.30)' }" />
       <Swatch label="black @ 0.24" value="rgba(0,0,0,0.24)" :swatch-style="{ background: 'rgba(0,0,0,0.24)' }" />
     </Section>
 
-    <Section id="vars" num="6" title="Unused shadcn CSS variables" code="hsl(var(--primary))" note="Copied from RN global.css; nothing in RN consumes them.">
+    <Section id="vars" num="5" title="Unused shadcn CSS variables" code="hsl(var(--primary))" note="Copied from RN global.css; nothing in RN consumes them.">
       <Swatch label="--primary" :swatch-style="{ background: 'hsl(var(--primary))' }" />
       <Swatch label="--background" :swatch-style="{ background: 'hsl(var(--background))' }" />
       <Swatch label="--destructive" :swatch-style="{ background: 'hsl(var(--destructive))' }" />
