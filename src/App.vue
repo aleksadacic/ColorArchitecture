@@ -35,9 +35,9 @@ const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
 </script>
 
 <template>
-  <div class="min-h-screen bg-light-container text-light-text dark:bg-dark-container dark:text-dark-text">
+  <div class="min-h-screen bg-canvas text-foreground">
     <header
-      class="sticky top-0 z-10 border-b border-light-border bg-light-background/80 backdrop-blur dark:border-dark-border dark:bg-dark-background/80"
+      class="sticky top-0 z-10 border-b border-border bg-surface/80 backdrop-blur"
     >
       <div class="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
         <div class="flex items-center gap-2.5">
@@ -46,7 +46,7 @@ const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
           </span>
           <h1 class="text-lg font-black tracking-tight">Color architecture</h1>
         </div>
-        <div class="ml-auto flex gap-1 rounded-xl bg-light-background-soft p-1 dark:bg-dark-background-soft">
+        <div class="ml-auto flex gap-1 rounded-xl bg-surface-muted p-1">
           <button
             v-for="t in themes"
             :key="t"
@@ -63,14 +63,14 @@ const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
     <div class="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[13rem_1fr]">
       <aside class="hidden lg:block">
         <nav class="sticky top-20 flex flex-col gap-1 text-sm font-bold">
-          <p class="mb-1 px-3 text-xs uppercase tracking-widest text-light-text-secondary dark:text-dark-text-secondary">
+          <p class="mb-1 px-3 text-xs uppercase tracking-widest text-foreground-muted">
             Usage methods
           </p>
           <a
             v-for="[id, n, label] in nav"
             :key="id"
             :href="'#' + id"
-            class="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-light-background-soft dark:hover:bg-dark-background-soft"
+            class="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-surface-muted"
           >
             <span class="text-xs text-primary">{{ n }}</span>{{ label }}
           </a>
@@ -101,12 +101,12 @@ const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
     <Section id="tailwind" num="4a" title="Direct Tailwind: primary ramp" code="bg-primary-500 (generated from PrimaryRamp in Colors.ts)">
       <Swatch v-for="s in ramp" :key="s" :label="`primary-${s}`" :swatch-class="`bg-primary-${s}`" />
     </Section>
-    <Section id="tailwind-4b" num="4b" title="Direct Tailwind: light-/dark- tokens" code="bg-light-container dark:bg-dark-container">
-      <Swatch label="container" swatch-class="bg-light-container dark:bg-dark-container" />
-      <Swatch label="background" swatch-class="bg-light-background dark:bg-dark-background" />
-      <Swatch label="background-soft" swatch-class="bg-light-background-soft dark:bg-dark-background-soft" />
+    <Section id="tailwind-4b" num="4b" title="Direct Tailwind: light-/dark- tokens" code="bg-light-canvas dark:bg-dark-canvas">
+      <Swatch label="canvas" swatch-class="bg-light-canvas dark:bg-dark-canvas" />
+      <Swatch label="surface" swatch-class="bg-light-surface dark:bg-dark-surface" />
+      <Swatch label="surface-muted" swatch-class="bg-light-surface-muted dark:bg-dark-surface-muted" />
       <Swatch label="border" swatch-class="border-4 border-light-border dark:border-dark-border" />
-      <Swatch label="text-secondary" swatch-class="text-2xl font-bold text-light-text-secondary dark:text-dark-text-secondary">Aa</Swatch>
+      <Swatch label="foreground-muted" swatch-class="text-2xl font-bold text-light-foreground-muted dark:text-dark-foreground-muted">Aa</Swatch>
     </Section>
     <Section
       id="tailwind-4c"
@@ -121,7 +121,22 @@ const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
       <Swatch label="bg-error" swatch-class="bg-error" />
       <Swatch label="bg-hint" swatch-class="bg-hint" />
       <Swatch label="bg-message-sent-background" swatch-class="bg-message-sent-background" />
-      <Swatch label="text-dark-text-tertiary (fixed)" swatch-class="text-2xl font-bold bg-black text-dark-text-tertiary">Aa</Swatch>
+      <Swatch label="text-dark-foreground-subtle (fixed)" swatch-class="text-2xl font-bold bg-black text-dark-foreground-subtle">Aa</Swatch>
+    </Section>
+    <Section
+      id="tailwind-4d"
+      num="4d"
+      title="Direct Tailwind: semantic tokens"
+      code="bg-canvas (var(--theme-canvas), set per theme)"
+      note="One class per role, no dark: pair. Same colors as 4b; flips with the toggle."
+    >
+      <Swatch label="bg-canvas" swatch-class="bg-canvas" />
+      <Swatch label="bg-surface" swatch-class="bg-surface" />
+      <Swatch label="bg-surface-muted" swatch-class="bg-surface-muted" />
+      <Swatch label="border-border" swatch-class="border-4 border-border" />
+      <Swatch label="text-foreground" swatch-class="text-2xl font-bold text-foreground">Aa</Swatch>
+      <Swatch label="text-foreground-muted" swatch-class="text-2xl font-bold text-foreground-muted">Aa</Swatch>
+      <Swatch label="text-foreground-subtle" swatch-class="text-2xl font-bold text-foreground-subtle">Aa</Swatch>
     </Section>
 
     <Section id="alpha" num="5" title="Hand-written alpha literals" code="rgba(255,51,25,0.14) copied from primary" note="Used by TSwitch / ContractCard; will not follow a primary change.">

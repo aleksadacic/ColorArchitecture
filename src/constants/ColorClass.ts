@@ -2,20 +2,20 @@
 export const ColorClass = {
   text: {
     primary: 'text-primary',
-    typography: 'text-light-text dark:text-dark-text',
-    typographyInverse: 'dark:text-light-text text-dark-text',
+    foreground: 'text-light-foreground dark:text-dark-foreground',
+    foregroundInverse: 'dark:text-light-foreground text-dark-foreground',
     black: 'text-black',
     white: 'text-white',
-    secondary: 'text-light-text-secondary dark:text-dark-text-secondary',
-    tertiary: 'text-light-text-tertiary dark:text-dark-text-tertiary',
+    foregroundMuted: 'text-light-foreground-muted dark:text-dark-foreground-muted',
+    foregroundSubtle: 'text-light-foreground-subtle dark:text-dark-foreground-subtle',
     contrast: 'text-black dark:text-white',
     contrastInverse: 'dark:text-black text-white',
   },
   background: {
     primary: 'bg-primary',
-    container: 'bg-light-container dark:bg-dark-container',
-    normal: 'bg-light-background dark:bg-dark-background',
-    soft: 'bg-light-background-soft dark:bg-dark-background-soft',
+    canvas: 'bg-light-canvas dark:bg-dark-canvas',
+    surface: 'bg-light-surface dark:bg-dark-surface',
+    surfaceMuted: 'bg-light-surface-muted dark:bg-dark-surface-muted',
     contrast: 'bg-white dark:bg-black',
   },
   border: {

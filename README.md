@@ -32,9 +32,11 @@ Numbers refer to `FIXES.md`.
 - **1:** the `light-dark-tertiary` token typo is fixed as `dark-text-tertiary`.
 - **2:** the safelist includes `text-tertiary` and `background-soft`.
 - **3:** the no-op `dark:` classes are removed from `usePaletteClass`.
-- **5:** `usePaletteClass` is replaced by the static `PaletteClass` constant in `src/constants/PaletteClass.ts`.
+- **5:** `usePaletteClass` is replaced by the static `ColorClass` constant in `src/constants/ColorClass.ts`.
 - **6, 15:** the `light-*`/`dark-*` Tailwind tokens and `usePalette` are generated from `Colors` instead of listed by hand.
 - **7:** the `primary` 50-950 ramp lives in `Colors.ts` as `PrimaryRamp`; `Colors.primary*` and Tailwind read from it.
 - **8:** status and other fixed brand colors (`success`, `info`, `warning`, `error`, `hint`, `messageSentBackground`) have generated Tailwind classes.
+- **9:** semantic tokens (`bg-canvas`, `text-foreground-muted`, ...) backed by `--theme-*` CSS variables switch with the theme without `dark:` pairs. The demo layout uses them.
+- **13:** the theme keys are renamed by role: `container` -> `canvas`, `background` -> `surface`, `backgroundSoft` -> `surfaceMuted`, `text` -> `foreground`, `textSecondary` -> `foregroundMuted`, `textTertiary` -> `foregroundSubtle` (`border` unchanged). Classes follow, e.g. `bg-light-canvas`, `text-foreground-muted`.
 
 See `FIXES.md` for what I would change.

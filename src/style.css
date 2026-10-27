@@ -12,7 +12,7 @@
 @source inline('gap-{1,2,3,4,5,6,8,9,10,20}');
 @source inline('{,dark:}border');
 @source inline('{,dark:}{bg,text,border,fill,stroke}-primary');
-@source inline('{,dark:}{bg,border,text,stroke,fill}-{light,dark}-{text,border,container,background,text-secondary,text-tertiary,background-soft}');
+@source inline('{,dark:}{bg,border,text,stroke,fill}-{light,dark}-{foreground,border,canvas,surface,foreground-muted,foreground-subtle,surface-muted}');
 
 /* Demo-only: Satoshi (Fontshare, linked in index.html). Set here rather than in tailwind.config.js,
    which stays a faithful copy of the RN config (fontFamily.sans: Nunito). */

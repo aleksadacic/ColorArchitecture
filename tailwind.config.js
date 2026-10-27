@@ -1,6 +1,6 @@
 import { Colors, PrimaryRamp } from './src/constants/Colors';
 
-// `Colors.light.textSecondary` -> `light-text-secondary`, etc. Generated so the token names
+// `Colors.light.foregroundMuted` -> `light-foreground-muted`, etc. Generated so the token names
 // cannot drift from `Colors` (see FIXES.md item 6).
 const kebab = (s) => s.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
 const themeTokens = Object.fromEntries(
@@ -17,6 +17,15 @@ const brandTokens = Object.fromEntries(
     .map(([key, value]) => [kebab(key), value]),
 );
 
+// Semantic tokens (FIXES.md item 9): one class per role, e.g. `bg-canvas`, backed by
+// `--theme-canvas`. The plugin below sets the variables from `Colors.light` on :root and from
+// `Colors.dark` on .dark, so the theme switches without `dark:` pairs.
+const semanticTokens = Object.fromEntries(
+  Object.keys(Colors.light).map((key) => [kebab(key), `var(--theme-${kebab(key)})`]),
+);
+const themeVars = (scheme) =>
+  Object.fromEntries(Object.entries(Colors[scheme]).map(([key, value]) => [`--theme-${kebab(key)}`, value]));
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
@@ -30,7 +39,7 @@ module.exports = {
     { pattern: /^border$/, variants: ['dark'] },
     { pattern: /^(bg|text|border|fill|stroke)-primary$/, variants: ['dark'] },
     {
-      pattern: /(bg|border|text|stroke|fill)-(light|dark)-(text|border|container|background|text-secondary|text-tertiary|background-soft)$/,
+      pattern: /(bg|border|text|stroke|fill)-(light|dark)-(foreground|border|canvas|surface|foreground-muted|foreground-subtle|surface-muted)$/,
       variants: ['dark'],
     },
   ],
@@ -40,6 +49,7 @@ module.exports = {
         primary: { DEFAULT: Colors.primary, ...PrimaryRamp },
         ...brandTokens,
         ...themeTokens,
+        ...semanticTokens,
       },
       fontFamily: {
         sans: ['Nunito'],
@@ -62,5 +72,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [({ addBase }) => addBase({ ':root': themeVars('light'), '.dark': themeVars('dark') })],
 };

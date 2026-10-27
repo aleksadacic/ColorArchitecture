@@ -13,7 +13,7 @@ defineProps<{ label: string; value?: string; swatchClass?: string; swatchStyle?:
       <slot />
     </div>
     <div class="mt-2 break-words text-sm font-bold leading-tight">{{ label }}</div>
-    <div v-if="value" class="mt-0.5 break-all font-mono text-xs text-light-text-secondary dark:text-dark-text-secondary">
+    <div v-if="value" class="mt-0.5 break-all font-mono text-xs text-foreground-muted">
       {{ value }}
     </div>
   </div>
