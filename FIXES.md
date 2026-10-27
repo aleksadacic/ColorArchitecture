@@ -29,11 +29,13 @@ item below is still present here and visible on screen, except those marked FIXE
    sync check. Derive Tailwind colors and the `usePalette` object from `Colors` programmatically.
    (In this demo the `light-*`/`dark-*` Tailwind tokens are generated from `Colors.light`/`Colors.dark`,
    `usePalette` spreads `Colors`, and a type check in `usePalette.ts` fails if the light and dark keys
-   differ. Still hand-listed: the `primary` ramp (item 7) and the safelist key lists. The original RN
+   differ. Still hand-listed: the safelist key lists. The original RN
    repo is unchanged.)
-7. **`primary` is split across two places.** The 50-950 ramp exists only in Tailwind; `Colors.ts` has
+7. **FIXED in this demo.** **`primary` is split across two places.** The 50-950 ramp exists only in Tailwind; `Colors.ts` has
    `primary`, `primary200`, `primary300`. `primary` is duplicated as a literal `#FF3319`.
    Move the whole ramp into `Colors.ts`.
+   (In this demo `Colors.ts` exports `PrimaryRamp`; `Colors.primary`/`primary200`/`primary300` and
+   Tailwind's `primary` colors read from it. The original RN repo is unchanged.)
 8. **Status colors (`success/info/warning/error/hint`) have no Tailwind classes.**
    Class-based code cannot use them. Demo: section 4c.
 9. **Theme is encoded in token names** (`light-text` + `dark:dark-text`). Every use needs a pair,

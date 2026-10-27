@@ -1,7 +1,22 @@
+// Full brand ramp; Tailwind's `primary-50` ... `primary-950` are generated from it (see FIXES.md item 7).
+export const PrimaryRamp = {
+  50: '#fff2f0',
+  100: '#ffe1dd',
+  200: '#ffc7c0',
+  300: '#ffa094',
+  400: '#ff6a57',
+  500: '#ff3c23',
+  600: '#ff3319',
+  700: '#d71800',
+  800: '#b11703',
+  900: '#92190a',
+  950: '#500900',
+} as const;
+
 export const Colors = {
-  primary: '#FF3319',
-  primary200: '#FFC7C0',
-  primary300: '#ffa094',
+  primary: PrimaryRamp[600],
+  primary200: PrimaryRamp[200],
+  primary300: PrimaryRamp[300],
   success: '#0E9F58',
   info: '#377DFF',
   warning: '#E5A000',

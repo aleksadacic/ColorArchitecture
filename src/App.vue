@@ -3,7 +3,7 @@ import { computed, watchEffect } from 'vue';
 
 import Section from '@/components/Section.vue';
 import Swatch from '@/components/Swatch.vue';
-import { Colors } from '@/constants/Colors';
+import { Colors, PrimaryRamp } from '@/constants/Colors';
 import { ColorClass } from '@/constants/ColorClass';
 import { useEffectiveColorScheme } from '@/hooks/useEffectiveColorScheme';
 import { usePalette } from '@/hooks/usePalette';
@@ -28,7 +28,7 @@ const rawBrand = Object.entries(Colors).filter(([, v]) => typeof v === 'string')
 const rawLight = Object.entries(Colors.light);
 const rawDark = Object.entries(Colors.dark);
 const paletteEntries = computed(() => Object.entries(palette.value));
-const ramp = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
+const ramp = Object.keys(PrimaryRamp);
 const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
   Object.entries(m).map(([k, cls]) => ({ id: `${group}.${k}`, cls })),
 );
@@ -98,7 +98,7 @@ const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
       </Swatch>
     </Section>
 
-    <Section id="tailwind" num="4a" title="Direct Tailwind: primary ramp" code="bg-primary-500 (defined only in tailwind.config.js)">
+    <Section id="tailwind" num="4a" title="Direct Tailwind: primary ramp" code="bg-primary-500 (generated from PrimaryRamp in Colors.ts)">
       <Swatch v-for="s in ramp" :key="s" :label="`primary-${s}`" :swatch-class="`bg-primary-${s}`" />
     </Section>
     <Section id="tailwind-4b" num="4b" title="Direct Tailwind: light-/dark- tokens" code="bg-light-container dark:bg-dark-container">

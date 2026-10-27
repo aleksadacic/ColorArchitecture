@@ -13,7 +13,7 @@ npm run build   # vue-tsc + vite build
 
 | RN source | Here |
 |---|---|
-| `constants/Colors.ts` | `src/constants/Colors.ts` (verbatim) |
+| `constants/Colors.ts` | `src/constants/Colors.ts` (same values; see deviations) |
 | `tailwind.config.js` | `tailwind.config.js` (`nativewind/preset` and `content` adapted; see deviations) |
 | `global.css` | `src/style.css` (HSL variables verbatim; Tailwind 4 entry on top) |
 | `hooks/useThemeColor`, `usePalette`, `useEffectiveColorScheme`, `useColorScheme` | `src/hooks/*` as Vue composables (same names; return `ComputedRef`) |
@@ -34,5 +34,6 @@ Numbers refer to `FIXES.md`.
 - **3:** the no-op `dark:` classes are removed from `usePaletteClass`.
 - **5:** `usePaletteClass` is replaced by the static `PaletteClass` constant in `src/constants/PaletteClass.ts`.
 - **6, 15:** the `light-*`/`dark-*` Tailwind tokens and `usePalette` are generated from `Colors` instead of listed by hand.
+- **7:** the `primary` 50-950 ramp lives in `Colors.ts` as `PrimaryRamp`; `Colors.primary*` and Tailwind read from it.
 
 See `FIXES.md` for what I would change.

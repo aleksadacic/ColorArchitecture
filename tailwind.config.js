@@ -1,4 +1,4 @@
-import { Colors } from './src/constants/Colors';
+import { Colors, PrimaryRamp } from './src/constants/Colors';
 
 // `Colors.light.textSecondary` -> `light-text-secondary`, etc. Generated so the token names
 // cannot drift from `Colors` (see FIXES.md item 6).
@@ -29,20 +29,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#FF3319',
-          50: '#fff2f0',
-          100: '#ffe1dd',
-          200: '#ffc7c0',
-          300: '#ffa094',
-          400: '#ff6a57',
-          500: '#ff3c23',
-          600: '#ff3319',
-          700: '#d71800',
-          800: '#b11703',
-          900: '#92190a',
-          950: '#500900',
-        },
+        primary: { DEFAULT: Colors.primary, ...PrimaryRamp },
         ...themeTokens,
       },
       fontFamily: {
