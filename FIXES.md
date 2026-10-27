@@ -69,8 +69,11 @@ item below is still present here and visible on screen, except those marked FIXE
     `container` -> `canvas`, `background` -> `surface`, `backgroundSoft` -> `surfaceMuted`,
     `text` -> `foreground`, `textSecondary` -> `foregroundMuted`, `textTertiary` -> `foregroundSubtle`;
     `border` is unchanged. Earlier items keep the RN names. The original RN repo is unchanged.)
-14. **`fontFamily.sans: ['Nunito']` has no fallback stack.** On web this resolves to serif until the
-    font loads (visible in this demo).
+14. **FIXED in this demo.** **`fontFamily.sans: ['Nunito']` has no fallback stack.** On web this resolves to serif until the
+    font loads.
+    (In this demo `fontFamily.sans` is `['Satoshi', 'ui-sans-serif', 'system-ui', 'sans-serif']`, the
+    demo's font, and the separate body override in `src/style.css` is gone. The original RN repo is
+    unchanged; there, add the same kind of fallback stack after `'Nunito'`.)
 15. **FIXED in this demo.** **`usePalette` re-lists every key by hand.** Build it from `Colors` so adding a color is one edit.
     (Done as part of item 6.)
 

@@ -52,7 +52,7 @@ module.exports = {
         ...semanticTokens,
       },
       fontFamily: {
-        sans: ['Nunito'],
+        sans: ['Satoshi', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       fontWeight: {
         black: '900',
