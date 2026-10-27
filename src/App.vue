@@ -4,14 +4,13 @@ import { computed, watchEffect } from 'vue';
 import Section from '@/components/Section.vue';
 import Swatch from '@/components/Swatch.vue';
 import { Colors } from '@/constants/Colors';
+import { ColorClass } from '@/constants/ColorClass';
 import { useEffectiveColorScheme } from '@/hooks/useEffectiveColorScheme';
 import { usePalette } from '@/hooks/usePalette';
-import { usePaletteClass } from '@/hooks/usePaletteClass';
 import { setThemeSetting, themeSetting, ThemeSetting } from '@/stores/useAppPreferencesStore';
 
 const scheme = useEffectiveColorScheme();
 const palette = usePalette();
-const pc = usePaletteClass();
 
 // NativeWind does this for RN; on web `darkMode: 'class'` needs the class on <html>.
 watchEffect(() => document.documentElement.classList.toggle('dark', scheme.value === 'dark'));
@@ -19,7 +18,7 @@ watchEffect(() => document.documentElement.classList.toggle('dark', scheme.value
 const nav = [
   ['raw', '1', 'Raw constants'],
   ['palette', '2', 'usePalette()'],
-  ['class', '3', 'usePaletteClass()'],
+  ['class', '3', 'ColorClass'],
   ['tailwind', '4', 'Direct Tailwind'],
   ['alpha', '5', 'Alpha literals'],
   ['vars', '6', 'CSS variables'],
@@ -30,8 +29,8 @@ const rawLight = Object.entries(Colors.light);
 const rawDark = Object.entries(Colors.dark);
 const paletteEntries = computed(() => Object.entries(palette.value));
 const ramp = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
-const classGroups = computed(() =>
-  Object.entries(pc.value).flatMap(([group, m]) => Object.entries(m).map(([k, cls]) => ({ id: `${group}.${k}`, cls }))),
+const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
+  Object.entries(m).map(([k, cls]) => ({ id: `${group}.${k}`, cls })),
 );
 </script>
 
@@ -91,7 +90,7 @@ const classGroups = computed(() =>
       <Swatch v-for="[k, v] in paletteEntries" :key="k" :label="`palette.${k}`" :value="v" :swatch-style="{ background: v }" />
     </Section>
 
-    <Section id="class" num="3" title="usePaletteClass()" code=":class=&quot;paletteClass.group.key&quot;" note="Backgrounds use bg-*; text entries show 'Aa'; borders show an outline.">
+    <Section id="class" num="3" title="ColorClass" code=":class=&quot;ColorClass.group.key&quot;" note="Backgrounds use bg-*; text entries show 'Aa'; borders show an outline.">
       <Swatch v-for="c in classGroups" :key="c.id" :label="c.id" :value="c.cls">
         <span :class="c.id.startsWith('text') ? [c.cls, 'text-2xl font-bold bg-gray-400/30 px-2 rounded'] : c.cls" class="w-full h-full flex items-center justify-center">
           {{ c.id.startsWith('text') ? 'Aa' : '' }}

@@ -1,7 +1,7 @@
 # What I would fix
 
 Source: `cimicimi-mobile/cimicimi` (RN/Expo + NativeWind). This demo is a **faithful port**, so every
-item below is still present here and visible on screen, except those marked FIXED. Section numbers refer to the demo page.
+item below is still present here and visible on screen, except those marked FIXED or RN only. Section numbers refer to the demo page.
 
 ## Bugs
 
@@ -17,8 +17,11 @@ item below is still present here and visible on screen, except those marked FIXE
 3. **FIXED in this demo.** **`dark:text-primary`, `dark:text-black`, `dark:text-white` etc. in `usePaletteClass`** are no-ops
    (same as the base class). Harmless, but noise. (Removed from this demo's `usePaletteClass`;
    the original RN repo is unchanged.)
-4. **`global.css` has `@tailwind base/components/utilities` twice** (top and bottom).
-5. **`usePaletteClass` memoizes static strings** on `scheme`. The memo does nothing.
+4. **RN only, not in this demo.** **`global.css` has `@tailwind base/components/utilities` twice** (top and bottom).
+   The demo's `src/style.css` uses a single Tailwind 4 `@import 'tailwindcss'`, so there is nothing to fix here.
+5. **FIXED in this demo.** **`usePaletteClass` memoizes static strings** on `scheme`. The memo does nothing.
+   (In this demo the hook is replaced by the static `PaletteClass` constant in
+   `src/constants/PaletteClass.ts`; the original RN repo is unchanged.)
 
 ## Architecture
 
