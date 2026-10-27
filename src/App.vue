@@ -36,7 +36,7 @@ const classGroups = computed(() =>
 </script>
 
 <template>
-  <div class="min-h-screen bg-light-background text-light-text dark:bg-dark-background dark:text-dark-text">
+  <div class="min-h-screen bg-light-container text-light-text dark:bg-dark-container dark:text-dark-text">
     <header
       class="sticky top-0 z-10 border-b border-light-border bg-light-background/80 backdrop-blur dark:border-dark-border dark:bg-dark-background/80"
     >

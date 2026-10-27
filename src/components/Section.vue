@@ -5,7 +5,7 @@ defineProps<{ id: string; num: string; title: string; code: string; note?: strin
 <template>
   <section
     :id="id"
-    class="rounded-3xl border border-light-border dark:border-dark-border bg-light-container dark:bg-dark-container p-5 sm:p-7"
+    class="rounded-3xl border border-light-border dark:border-dark-border bg-light-background dark:bg-dark-background p-5 sm:p-7"
   >
     <header class="mb-5 flex items-start gap-4">
       <span
