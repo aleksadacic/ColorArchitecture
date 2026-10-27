@@ -14,6 +14,21 @@
 @source inline('{,dark:}{bg,text,border,fill,stroke}-primary');
 @source inline('{,dark:}{bg,border,text,stroke,fill}-{light,dark}-{text,border,container,background,text-secondary}');
 
+/* Demo-only: Satoshi (Fontshare, linked in index.html). Set here rather than in tailwind.config.js,
+   which stays a faithful copy of the RN config (fontFamily.sans: Nunito). */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+body {
+  font-family: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+code,
+.font-mono {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
 /* Copied verbatim from RN global.css (shadcn/gluestack-style HSL variables). */
 @layer base {
     :root {

@@ -4,15 +4,17 @@ defineProps<{ label: string; value?: string; swatchClass?: string; swatchStyle?:
 </script>
 
 <template>
-  <div class="text-xs">
+  <div class="min-w-0">
     <div
-      class="h-14 rounded-lg border border-black/10 dark:border-white/10 flex items-center justify-center"
+      class="flex h-20 items-center justify-center rounded-2xl border border-black/10 shadow-sm dark:border-white/10"
       :class="swatchClass"
       :style="swatchStyle"
     >
       <slot />
     </div>
-    <div class="mt-1 font-semibold break-all">{{ label }}</div>
-    <div v-if="value" class="opacity-60 break-all">{{ value }}</div>
+    <div class="mt-2 break-words text-sm font-bold leading-tight">{{ label }}</div>
+    <div v-if="value" class="mt-0.5 break-all font-mono text-xs text-light-text-secondary dark:text-dark-text-secondary">
+      {{ value }}
+    </div>
   </div>
 </template>

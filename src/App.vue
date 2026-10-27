@@ -16,6 +16,14 @@ const pc = usePaletteClass();
 // NativeWind does this for RN; on web `darkMode: 'class'` needs the class on <html>.
 watchEffect(() => document.documentElement.classList.toggle('dark', scheme.value === 'dark'));
 
+const nav = [
+  ['raw', '1', 'Raw constants'],
+  ['palette', '2', 'usePalette()'],
+  ['class', '3', 'usePaletteClass()'],
+  ['tailwind', '4', 'Direct Tailwind'],
+  ['alpha', '5', 'Alpha literals'],
+  ['vars', '6', 'CSS variables'],
+] as const;
 const themes: ThemeSetting[] = ['system', 'light', 'dark'];
 const rawBrand = Object.entries(Colors).filter(([, v]) => typeof v === 'string') as [string, string][];
 const rawLight = Object.entries(Colors.light);
@@ -28,36 +36,72 @@ const classGroups = computed(() =>
 </script>
 
 <template>
-  <main class="min-h-screen p-6 bg-light-background dark:bg-dark-background text-light-text dark:text-dark-text">
-    <header class="flex flex-wrap items-center gap-4 mb-8">
-      <h1 class="text-2xl font-extrabold">Color architecture <span class="text-primary">demo</span></h1>
-      <div class="flex gap-1 p-1 rounded-lg bg-light-background-soft dark:bg-dark-background-soft">
-        <button
-          v-for="t in themes"
-          :key="t"
-          class="px-3 py-1 rounded-md text-sm"
-          :class="themeSetting === t ? 'bg-primary text-white' : ''"
-          @click="setThemeSetting(t)"
-        >
-          {{ t }}
-        </button>
+  <div class="min-h-screen bg-light-background text-light-text dark:bg-dark-background dark:text-dark-text">
+    <header
+      class="sticky top-0 z-10 border-b border-light-border bg-light-background/80 backdrop-blur dark:border-dark-border dark:bg-dark-background/80"
+    >
+      <div class="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
+        <div class="flex items-center gap-2.5">
+          <span class="grid h-8 w-8 grid-cols-2 gap-0.5 overflow-hidden rounded-lg">
+            <i class="bg-primary-300" /><i class="bg-primary-500" /><i class="bg-primary-700" /><i class="bg-primary-950" />
+          </span>
+          <h1 class="text-lg font-black tracking-tight">Color architecture</h1>
+        </div>
+        <span class="hidden text-sm text-light-text-secondary dark:text-dark-text-secondary sm:inline">
+          effective theme: <b class="text-light-text dark:text-dark-text">{{ scheme }}</b>
+        </span>
+        <div class="ml-auto flex gap-1 rounded-xl bg-light-background-soft p-1 dark:bg-dark-background-soft">
+          <button
+            v-for="t in themes"
+            :key="t"
+            class="cursor-pointer rounded-lg px-3 py-1 text-sm font-bold capitalize transition-colors"
+            :class="themeSetting === t ? 'bg-primary text-white shadow-sm' : 'hover:bg-black/5 dark:hover:bg-white/10'"
+            @click="setThemeSetting(t)"
+          >
+            {{ t }}
+          </button>
+        </div>
       </div>
-      <span class="text-sm opacity-70">effective: {{ scheme }}</span>
     </header>
 
-    <Section title="1. Raw Colors constants" code="style=&quot;background: Colors.x&quot;" note="Not theme-aware: a fixed value regardless of mode.">
+    <div class="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[13rem_1fr]">
+      <aside class="hidden lg:block">
+        <nav class="sticky top-20 flex flex-col gap-1 text-sm font-bold">
+          <p class="mb-1 px-3 text-xs uppercase tracking-widest text-light-text-secondary dark:text-dark-text-secondary">
+            Usage methods
+          </p>
+          <a
+            v-for="[id, n, label] in nav"
+            :key="id"
+            :href="'#' + id"
+            class="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-light-background-soft dark:hover:bg-dark-background-soft"
+          >
+            <span class="text-xs text-primary">{{ n }}</span>{{ label }}
+          </a>
+        </nav>
+      </aside>
+
+      <main class="flex min-w-0 flex-col gap-6">
+        <div class="rounded-3xl bg-primary px-6 py-8 text-white sm:px-8">
+          <h2 class="text-3xl font-black tracking-tight sm:text-4xl">Every way a color reaches the screen.</h2>
+          <p class="mt-2 max-w-2xl text-primary-50">
+            A faithful port of the cimicimi color setup. Flip the theme and watch which methods follow, and which don't.
+          </p>
+        </div>
+
+<Section id="raw" num="1" title="Raw Colors constants" code="style=&quot;background: Colors.x&quot;" note="Not theme-aware: a fixed value regardless of mode.">
       <Swatch v-for="[k, v] in rawBrand" :key="k" :label="`Colors.${k}`" :value="v" :swatch-style="{ background: v }" />
     </Section>
-    <Section title="1b. Colors.light vs Colors.dark" code="Colors[scheme][key]">
+    <Section id="raw-1b" num="1b" title="Colors.light vs Colors.dark" code="Colors[scheme][key]">
       <Swatch v-for="[k, v] in rawLight" :key="'l' + k" :label="`light.${k}`" :value="v" :swatch-style="{ background: v }" />
       <Swatch v-for="[k, v] in rawDark" :key="'d' + k" :label="`dark.${k}`" :value="v" :swatch-style="{ background: v }" />
     </Section>
 
-    <Section title="2. usePalette()" code=":style=&quot;{ background: palette.x }&quot;" note="Theme-resolved hex; flips with the toggle.">
+    <Section id="palette" num="2" title="usePalette()" code=":style=&quot;{ background: palette.x }&quot;" note="Theme-resolved hex; flips with the toggle.">
       <Swatch v-for="[k, v] in paletteEntries" :key="k" :label="`palette.${k}`" :value="v" :swatch-style="{ background: v }" />
     </Section>
 
-    <Section title="3. usePaletteClass()" code=":class=&quot;paletteClass.group.key&quot;" note="Backgrounds use bg-*; text entries show 'Aa'; borders show an outline.">
+    <Section id="class" num="3" title="usePaletteClass()" code=":class=&quot;paletteClass.group.key&quot;" note="Backgrounds use bg-*; text entries show 'Aa'; borders show an outline.">
       <Swatch v-for="c in classGroups" :key="c.id" :label="c.id" :value="c.cls">
         <span :class="c.id.startsWith('text') ? [c.cls, 'text-2xl font-bold bg-gray-400/30 px-2 rounded'] : c.cls" class="w-full h-full flex items-center justify-center">
           {{ c.id.startsWith('text') ? 'Aa' : '' }}
@@ -65,10 +109,10 @@ const classGroups = computed(() =>
       </Swatch>
     </Section>
 
-    <Section title="4a. Direct Tailwind: primary ramp" code="bg-primary-500 (defined only in tailwind.config.js)">
+    <Section id="tailwind" num="4a" title="Direct Tailwind: primary ramp" code="bg-primary-500 (defined only in tailwind.config.js)">
       <Swatch v-for="s in ramp" :key="s" :label="`primary-${s}`" :swatch-class="`bg-primary-${s}`" />
     </Section>
-    <Section title="4b. Direct Tailwind: light-/dark- tokens" code="bg-light-container dark:bg-dark-container">
+    <Section id="tailwind-4b" num="4b" title="Direct Tailwind: light-/dark- tokens" code="bg-light-container dark:bg-dark-container">
       <Swatch label="container" swatch-class="bg-light-container dark:bg-dark-container" />
       <Swatch label="background" swatch-class="bg-light-background dark:bg-dark-background" />
       <Swatch label="background-soft" swatch-class="bg-light-background-soft dark:bg-dark-background-soft" />
@@ -76,7 +120,9 @@ const classGroups = computed(() =>
       <Swatch label="text-secondary" swatch-class="text-2xl font-bold text-light-text-secondary dark:text-dark-text-secondary">Aa</Swatch>
     </Section>
     <Section
-      title="4c. Gaps in the Tailwind mapping"
+      id="tailwind-4c"
+      num="4c"
+      title="Gaps in the Tailwind mapping"
       code="status colors have no classes; dark tertiary token is misnamed"
       note="Expect: blank chips where a class does not resolve."
     >
@@ -86,16 +132,18 @@ const classGroups = computed(() =>
       <Swatch label="text-light-dark-tertiary (actual name)" swatch-class="text-2xl font-bold bg-black text-light-dark-tertiary">Aa</Swatch>
     </Section>
 
-    <Section title="5. Hand-written alpha literals" code="rgba(255,51,25,0.14) copied from primary" note="Used by TSwitch / ContractCard; will not follow a primary change.">
+    <Section id="alpha" num="5" title="Hand-written alpha literals" code="rgba(255,51,25,0.14) copied from primary" note="Used by TSwitch / ContractCard; will not follow a primary change.">
       <Swatch label="primary @ 0.14" value="rgba(255, 51, 25, 0.14)" :swatch-style="{ background: 'rgba(255, 51, 25, 0.14)' }" />
       <Swatch label="primary @ 0.30" value="rgba(255,51,25,0.30)" :swatch-style="{ background: 'rgba(255,51,25,0.30)' }" />
       <Swatch label="black @ 0.24" value="rgba(0,0,0,0.24)" :swatch-style="{ background: 'rgba(0,0,0,0.24)' }" />
     </Section>
 
-    <Section title="6. Unused shadcn CSS variables" code="hsl(var(--primary))" note="Copied from RN global.css; nothing in RN consumes them.">
+    <Section id="vars" num="6" title="Unused shadcn CSS variables" code="hsl(var(--primary))" note="Copied from RN global.css; nothing in RN consumes them.">
       <Swatch label="--primary" :swatch-style="{ background: 'hsl(var(--primary))' }" />
       <Swatch label="--background" :swatch-style="{ background: 'hsl(var(--background))' }" />
       <Swatch label="--destructive" :swatch-style="{ background: 'hsl(var(--destructive))' }" />
     </Section>
-  </main>
+        </main>
+    </div>
+  </div>
 </template>
