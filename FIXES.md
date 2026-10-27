@@ -46,8 +46,7 @@ item below is still present here and visible on screen, except those marked FIXE
    `usePaletteClass` can go away.
    (In this demo Tailwind generates `bg-canvas`, `text-foreground-muted`, `border-border`, etc. backed by
    `--theme-*` variables, set from `Colors.light` on `:root` and `Colors.dark` on `.dark` by a plugin in
-   `tailwind.config.js`. The demo's own layout uses them; section 3d shows them. Prefixed `--theme-` so
-   they don't collide with the dead shadcn variables from item 12. The `light-*`/`dark-*` tokens are kept
+   `tailwind.config.js`. The demo's own layout uses them; section 3d shows them. The `light-*`/`dark-*` tokens are kept
    so section 3b can show the old style. The original RN repo is unchanged.)
 10. **FIXED in this demo.** **Two competing consumption styles** for classes (`usePaletteClass` vs hand-written `dark:`; 44
     `dark:` uses in the RN app). Pick one.
@@ -58,9 +57,11 @@ item below is still present here and visible on screen, except those marked FIXE
     `withAlpha(color, a)` and named overlay tokens.
     (Removed from this demo entirely, along with their section; nothing else used them. If translucent
     colors come back, use an opacity modifier like `bg-primary/15`. The original RN repo is unchanged.)
-12. **Dead shadcn/gluestack CSS variables in `global.css`.** Nothing in the RN app reads them (and
+12. **FIXED in this demo.** **Dead shadcn/gluestack CSS variables in `global.css`.** Nothing in the RN app reads them (and
     their `--primary` is grey, unrelated to the brand). Delete, or make them the real semantic
-    layer from item 9. Demo: section 4.
+    layer from item 9.
+    (Deleted from this demo's `src/style.css`, along with their section; the semantic layer is the
+    generated `--theme-*` variables from item 9. The original RN repo is unchanged.)
 13. **FIXED in this demo.** **Inverted dark naming.** Dark `container` (`#000`) is darker than dark `background`
     (`#1e1c1e`); light is the opposite. Rename (`surface`/`sunken`) or document it.
     (The values are consistent: in both themes `container` is the page and `background` is one step

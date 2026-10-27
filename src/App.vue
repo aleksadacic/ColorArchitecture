@@ -18,7 +18,6 @@ const nav = [
   ['raw', '1', 'Raw constants'],
   ['palette', '2', 'usePalette()'],
   ['tailwind', '3', 'Direct Tailwind'],
-  ['vars', '4', 'CSS variables'],
 ] as const;
 const themes: ThemeSetting[] = ['system', 'light', 'dark'];
 const rawBrand = Object.entries(Colors).filter(([, v]) => typeof v === 'string') as [string, string][];
@@ -123,12 +122,6 @@ const ramp = Object.keys(PrimaryRamp);
       <Swatch label="text-foreground" swatch-class="text-2xl font-bold text-foreground">Aa</Swatch>
       <Swatch label="text-foreground-muted" swatch-class="text-2xl font-bold text-foreground-muted">Aa</Swatch>
       <Swatch label="text-foreground-subtle" swatch-class="text-2xl font-bold text-foreground-subtle">Aa</Swatch>
-    </Section>
-
-    <Section id="vars" num="4" title="Unused shadcn CSS variables" code="hsl(var(--primary))" note="Copied from RN global.css; nothing in RN consumes them.">
-      <Swatch label="--primary" :swatch-style="{ background: 'hsl(var(--primary))' }" />
-      <Swatch label="--background" :swatch-style="{ background: 'hsl(var(--background))' }" />
-      <Swatch label="--destructive" :swatch-style="{ background: 'hsl(var(--destructive))' }" />
     </Section>
         </main>
     </div>
