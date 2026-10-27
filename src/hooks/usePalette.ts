@@ -1,35 +1,19 @@
 import { computed } from 'vue';
 
 import { Colors } from '@/constants/Colors';
+import { useEffectiveColorScheme } from '@/hooks/useEffectiveColorScheme';
 
-import { useThemeColor } from './useThemeColor';
+// Brand colors are fixed; the rest comes from the active scheme. Built from `Colors` so adding a
+// color is one edit (see FIXES.md items 6 and 15).
+const { light, dark, ...brand } = Colors;
+
+// Fails type-checking if `Colors.light` and `Colors.dark` ever stop having the same keys.
+type LightKey = keyof typeof light;
+type DarkKey = keyof typeof dark;
+type SameKeys = [LightKey] extends [DarkKey] ? ([DarkKey] extends [LightKey] ? true : false) : false;
+export const themeKeysMatch: SameKeys = true;
 
 export function usePalette() {
-  const text = useThemeColor('text');
-  const textSecondary = useThemeColor('textSecondary');
-  const textTertiary = useThemeColor('textTertiary');
-  const background = useThemeColor('background');
-  const backgroundSoft = useThemeColor('backgroundSoft');
-  const container = useThemeColor('container');
-  const border = useThemeColor('border');
-  return computed(() => ({
-    primary: Colors.primary,
-    primary200: Colors.primary200,
-    primary300: Colors.primary300,
-    success: Colors.success,
-    info: Colors.info,
-    warning: Colors.warning,
-    error: Colors.error,
-    hint: Colors.hint,
-    black: Colors.black,
-    white: Colors.white,
-    messageSentBackground: Colors.messageSentBackground,
-    text: text.value,
-    textSecondary: textSecondary.value,
-    textTertiary: textTertiary.value,
-    background: background.value,
-    container: container.value,
-    border: border.value,
-    backgroundSoft: backgroundSoft.value,
-  }));
+  const scheme = useEffectiveColorScheme();
+  return computed(() => ({ ...brand, ...Colors[scheme.value] }));
 }

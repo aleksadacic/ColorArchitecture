@@ -25,8 +25,12 @@ item below is still present here and visible on screen, except those marked FIXE
 
 ## Architecture
 
-6. **The palette is declared three times** (`Colors.ts`, `usePalette`, `tailwind.config.js`) with no
+6. **FIXED in this demo.** **The palette is declared three times** (`Colors.ts`, `usePalette`, `tailwind.config.js`) with no
    sync check. Derive Tailwind colors and the `usePalette` object from `Colors` programmatically.
+   (In this demo the `light-*`/`dark-*` Tailwind tokens are generated from `Colors.light`/`Colors.dark`,
+   `usePalette` spreads `Colors`, and a type check in `usePalette.ts` fails if the light and dark keys
+   differ. Still hand-listed: the `primary` ramp (item 7) and the safelist key lists. The original RN
+   repo is unchanged.)
 7. **`primary` is split across two places.** The 50-950 ramp exists only in Tailwind; `Colors.ts` has
    `primary`, `primary200`, `primary300`. `primary` is duplicated as a literal `#FF3319`.
    Move the whole ramp into `Colors.ts`.
@@ -47,7 +51,8 @@ item below is still present here and visible on screen, except those marked FIXE
     (`#1e1c1e`); light is the opposite. Rename (`surface`/`sunken`) or document it.
 14. **`fontFamily.sans: ['Nunito']` has no fallback stack.** On web this resolves to serif until the
     font loads (visible in this demo).
-15. **`usePalette` re-lists every key by hand.** Build it from `Colors` so adding a color is one edit.
+15. **FIXED in this demo.** **`usePalette` re-lists every key by hand.** Build it from `Colors` so adding a color is one edit.
+    (Done as part of item 6.)
 
 ## Suggested order
 

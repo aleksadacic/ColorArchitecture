@@ -1,5 +1,14 @@
 import { Colors } from './src/constants/Colors';
 
+// `Colors.light.textSecondary` -> `light-text-secondary`, etc. Generated so the token names
+// cannot drift from `Colors` (see FIXES.md item 6).
+const kebab = (s) => s.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
+const themeTokens = Object.fromEntries(
+  ['light', 'dark'].flatMap((scheme) =>
+    Object.entries(Colors[scheme]).map(([key, value]) => [`${scheme}-${kebab(key)}`, value]),
+  ),
+);
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
@@ -34,21 +43,7 @@ module.exports = {
           900: '#92190a',
           950: '#500900',
         },
-        'light-text': Colors.light.text,
-        'light-text-secondary': Colors.light.textSecondary,
-        'light-text-tertiary': Colors.light.textTertiary,
-        'light-border': Colors.light.border,
-        'light-container': Colors.light.container,
-        'light-background': Colors.light.background,
-        'light-background-soft': Colors.light.backgroundSoft,
-
-        'dark-text': Colors.dark.text,
-        'dark-text-secondary': Colors.dark.textSecondary,
-        'dark-text-tertiary': Colors.dark.textTertiary,
-        'dark-border': Colors.dark.border,
-        'dark-container': Colors.dark.container,
-        'dark-background': Colors.dark.background,
-        'dark-background-soft': Colors.dark.backgroundSoft,
+        ...themeTokens,
       },
       fontFamily: {
         sans: ['Nunito'],
