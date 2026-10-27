@@ -9,6 +9,14 @@ const themeTokens = Object.fromEntries(
   ),
 );
 
+// Fixed brand colors other than the primary ramp: `success`, `info`, ..., `messageSentBackground` ->
+// `message-sent-background`. Gives status colors Tailwind classes (see FIXES.md item 8).
+const brandTokens = Object.fromEntries(
+  Object.entries(Colors)
+    .filter(([key, value]) => typeof value === 'string' && !key.startsWith('primary'))
+    .map(([key, value]) => [kebab(key), value]),
+);
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
@@ -30,6 +38,7 @@ module.exports = {
     extend: {
       colors: {
         primary: { DEFAULT: Colors.primary, ...PrimaryRamp },
+        ...brandTokens,
         ...themeTokens,
       },
       fontFamily: {

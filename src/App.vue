@@ -111,12 +111,16 @@ const classGroups = Object.entries(ColorClass).flatMap(([group, m]) =>
     <Section
       id="tailwind-4c"
       num="4c"
-      title="Gaps in the Tailwind mapping"
-      code="status colors have no classes"
-      note="Expect: blank chips where a class does not resolve."
+      title="Direct Tailwind: status and brand colors"
+      code="bg-success (generated from Colors in tailwind.config.js)"
+      note="These had no classes in the RN config; now every fixed Colors value has one."
     >
-      <Swatch label="bg-success (missing)" swatch-class="bg-success" />
-      <Swatch label="bg-error (missing)" swatch-class="bg-error" />
+      <Swatch label="bg-success" swatch-class="bg-success" />
+      <Swatch label="bg-info" swatch-class="bg-info" />
+      <Swatch label="bg-warning" swatch-class="bg-warning" />
+      <Swatch label="bg-error" swatch-class="bg-error" />
+      <Swatch label="bg-hint" swatch-class="bg-hint" />
+      <Swatch label="bg-message-sent-background" swatch-class="bg-message-sent-background" />
       <Swatch label="text-dark-text-tertiary (fixed)" swatch-class="text-2xl font-bold bg-black text-dark-text-tertiary">Aa</Swatch>
     </Section>
 

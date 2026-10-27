@@ -36,8 +36,10 @@ item below is still present here and visible on screen, except those marked FIXE
    Move the whole ramp into `Colors.ts`.
    (In this demo `Colors.ts` exports `PrimaryRamp`; `Colors.primary`/`primary200`/`primary300` and
    Tailwind's `primary` colors read from it. The original RN repo is unchanged.)
-8. **Status colors (`success/info/warning/error/hint`) have no Tailwind classes.**
+8. **FIXED in this demo.** **Status colors (`success/info/warning/error/hint`) have no Tailwind classes.**
    Class-based code cannot use them. Demo: section 4c.
+   (In this demo every fixed `Colors` value other than the primary ramp gets a generated class:
+   `bg-success`, `text-error`, `bg-message-sent-background`, etc. The original RN repo is unchanged.)
 9. **Theme is encoded in token names** (`light-text` + `dark:dark-text`). Every use needs a pair,
    which is why `usePaletteClass` exists. Use semantic tokens backed by CSS variables
    (`bg-background`, `text-foreground`) so the theme switches without `dark:` pairs, then

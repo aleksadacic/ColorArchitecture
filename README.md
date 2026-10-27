@@ -35,5 +35,6 @@ Numbers refer to `FIXES.md`.
 - **5:** `usePaletteClass` is replaced by the static `PaletteClass` constant in `src/constants/PaletteClass.ts`.
 - **6, 15:** the `light-*`/`dark-*` Tailwind tokens and `usePalette` are generated from `Colors` instead of listed by hand.
 - **7:** the `primary` 50-950 ramp lives in `Colors.ts` as `PrimaryRamp`; `Colors.primary*` and Tailwind read from it.
+- **8:** status and other fixed brand colors (`success`, `info`, `warning`, `error`, `hint`, `messageSentBackground`) have generated Tailwind classes.
 
 See `FIXES.md` for what I would change.
