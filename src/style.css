@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+
+/* Tailwind 4: load the legacy JS config (copied from RN). `safelist`, `presets` and
+   `content` are not read from it, so the safelist is re-declared below via @source inline. */
+@config '../tailwind.config.js';
+
+/* tailwind.config.js has darkMode: 'class'; v4 needs it declared in CSS. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Translation of the RN `safelist` patterns. */
+@source inline('{bg,text,border}-primary-{50,100,200,300,400,500,600,700,800,900,950}');
+@source inline('gap-{1,2,3,4,5,6,8,9,10,20}');
+@source inline('{,dark:}border');
+@source inline('{,dark:}{bg,text,border,fill,stroke}-primary');
+@source inline('{,dark:}{bg,border,text,stroke,fill}-{light,dark}-{text,border,container,background,text-secondary}');
+
+/* Copied verbatim from RN global.css (shadcn/gluestack-style HSL variables). */
+@layer base {
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 240 10% 3.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 240 10% 3.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 240 10% 3.9%;
+        --primary: 240 5.9% 10%;
+        --primary-foreground: 0 0% 98%;
+        --secondary: 240 4.8% 95.9%;
+        --secondary-foreground: 240 5.9% 10%;
+        --muted: 240 4.8% 95.9%;
+        --muted-foreground: 240 3.8% 46.1%;
+        --accent: 240 4.8% 95.9%;
+        --accent-foreground: 240 5.9% 10%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 240 5.9% 90%;
+        --input: 240 5.9% 90%;
+        --ring: 240 5.9% 10%;
+    }
+
+    .dark:root {
+        --background: 240 10% 3.9%;
+        --foreground: 0 0% 98%;
+        --card: 240 10% 3.9%;
+        --card-foreground: 0 0% 98%;
+        --popover: 240 10% 3.9%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 0 0% 98%;
+        --primary-foreground: 240 5.9% 10%;
+        --secondary: 240 3.7% 15.9%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 240 3.7% 15.9%;
+        --muted-foreground: 240 5% 64.9%;
+        --accent: 240 3.7% 15.9%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 0 72% 51%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 240 3.7% 15.9%;
+        --input: 240 3.7% 15.9%;
+        --ring: 240 4.9% 83.9%;
+    }
+}
