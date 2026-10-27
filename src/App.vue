@@ -18,8 +18,7 @@ const nav = [
   ['raw', '1', 'Raw constants'],
   ['palette', '2', 'usePalette()'],
   ['tailwind', '3', 'Direct Tailwind'],
-  ['alpha', '4', 'Alpha literals'],
-  ['vars', '5', 'CSS variables'],
+  ['vars', '4', 'CSS variables'],
 ] as const;
 const themes: ThemeSetting[] = ['system', 'light', 'dark'];
 const rawBrand = Object.entries(Colors).filter(([, v]) => typeof v === 'string') as [string, string][];
@@ -126,13 +125,7 @@ const ramp = Object.keys(PrimaryRamp);
       <Swatch label="text-foreground-subtle" swatch-class="text-2xl font-bold text-foreground-subtle">Aa</Swatch>
     </Section>
 
-    <Section id="alpha" num="4" title="Hand-written alpha literals" code="rgba(255,51,25,0.14) copied from primary" note="Used by TSwitch / ContractCard; will not follow a primary change.">
-      <Swatch label="primary @ 0.14" value="rgba(255, 51, 25, 0.14)" :swatch-style="{ background: 'rgba(255, 51, 25, 0.14)' }" />
-      <Swatch label="primary @ 0.30" value="rgba(255,51,25,0.30)" :swatch-style="{ background: 'rgba(255,51,25,0.30)' }" />
-      <Swatch label="black @ 0.24" value="rgba(0,0,0,0.24)" :swatch-style="{ background: 'rgba(0,0,0,0.24)' }" />
-    </Section>
-
-    <Section id="vars" num="5" title="Unused shadcn CSS variables" code="hsl(var(--primary))" note="Copied from RN global.css; nothing in RN consumes them.">
+    <Section id="vars" num="4" title="Unused shadcn CSS variables" code="hsl(var(--primary))" note="Copied from RN global.css; nothing in RN consumes them.">
       <Swatch label="--primary" :swatch-style="{ background: 'hsl(var(--primary))' }" />
       <Swatch label="--background" :swatch-style="{ background: 'hsl(var(--background))' }" />
       <Swatch label="--destructive" :swatch-style="{ background: 'hsl(var(--destructive))' }" />

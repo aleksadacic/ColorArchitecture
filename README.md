@@ -37,6 +37,7 @@ Numbers refer to `FIXES.md`.
 - **7:** the `primary` 50-950 ramp lives in `Colors.ts` as `PrimaryRamp`; `Colors.primary*` and Tailwind read from it.
 - **8:** status and other fixed brand colors (`success`, `info`, `warning`, `error`, `hint`, `messageSentBackground`) have generated Tailwind classes.
 - **9:** semantic tokens (`bg-canvas`, `text-foreground-muted`, ...) backed by `--theme-*` CSS variables switch with the theme without `dark:` pairs. The demo layout uses them.
+- **11:** the `rgba()` alpha literals and their demo section are removed.
 - **13:** the theme keys are renamed by role: `container` -> `canvas`, `background` -> `surface`, `backgroundSoft` -> `surfaceMuted`, `text` -> `foreground`, `textSecondary` -> `foregroundMuted`, `textTertiary` -> `foregroundSubtle` (`border` unchanged). Classes follow, e.g. `bg-light-canvas`, `text-foreground-muted`.
 
 See `FIXES.md` for what I would change.

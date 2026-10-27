@@ -54,11 +54,13 @@ item below is still present here and visible on screen, except those marked FIXE
     (In this demo the class lookup object is removed: after item 9 every entry was a class string that
     can be written directly, and themed colors collapse to one semantic class. Classes are written
     directly; `dark:` is for one-off deviations only. The original RN repo is unchanged.)
-11. **Hand-copied alpha literals** (`rgba(255,51,25,.14)`, `.30`, black scrims). Add
-    `withAlpha(color, a)` and named overlay tokens. Demo: section 4.
+11. **FIXED in this demo.** **Hand-copied alpha literals** (`rgba(255,51,25,.14)`, `.30`, black scrims). Add
+    `withAlpha(color, a)` and named overlay tokens.
+    (Removed from this demo entirely, along with their section; nothing else used them. If translucent
+    colors come back, use an opacity modifier like `bg-primary/15`. The original RN repo is unchanged.)
 12. **Dead shadcn/gluestack CSS variables in `global.css`.** Nothing in the RN app reads them (and
     their `--primary` is grey, unrelated to the brand). Delete, or make them the real semantic
-    layer from item 9. Demo: section 5.
+    layer from item 9. Demo: section 4.
 13. **FIXED in this demo.** **Inverted dark naming.** Dark `container` (`#000`) is darker than dark `background`
     (`#1e1c1e`); light is the opposite. Rename (`surface`/`sunken`) or document it.
     (The values are consistent: in both themes `container` is the page and `background` is one step
