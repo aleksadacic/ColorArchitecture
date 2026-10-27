@@ -9,6 +9,14 @@ npm run dev     # http://localhost:5173
 npm run build   # vue-tsc + vite build
 ```
 
+Each usage method has its own page (hash routes via `vue-router`, defined in `src/router.ts`):
+
+| Page | Route | Sections |
+|---|---|---|
+| Raw constants | `#/raw` | 1, 1b |
+| `usePalette()` | `#/palette` | 2 |
+| Direct Tailwind | `#/tailwind` | 3a-3d |
+
 ## What is copied (faithful port, bugs included)
 
 | RN source | Here |

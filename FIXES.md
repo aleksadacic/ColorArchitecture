@@ -1,7 +1,7 @@
 # What I would fix
 
 Source: `cimicimi-mobile/cimicimi` (RN/Expo + NativeWind). This demo is a **faithful port**, so every
-item below is still present here and visible on screen, except those marked FIXED or RN only. Section numbers refer to the demo page.
+item below is still present here and visible on screen, except those marked FIXED or RN only. Section numbers refer to the demo pages (1 = Raw constants, 2 = `usePalette()`, 3 = Direct Tailwind).
 
 ## Bugs
 
