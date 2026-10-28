@@ -46,7 +46,7 @@ const themes: ThemeSetting[] = ['system', 'light', 'dark'];
           class="flex shrink-0 items-center gap-2 rounded-xl px-3 py-1.5 hover:bg-surface-muted"
           active-class="bg-surface-muted"
         >
-          <span class="text-xs text-primary">{{ p.num }}</span>{{ p.label }}
+          {{ p.label }}
         </RouterLink>
       </nav>
     </header>
@@ -64,7 +64,7 @@ const themes: ThemeSetting[] = ['system', 'light', 'dark'];
             class="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-surface-muted"
             active-class="bg-surface-muted"
           >
-            <span class="text-xs text-primary">{{ p.num }}</span>{{ p.label }}
+            {{ p.label }}
           </RouterLink>
         </nav>
       </aside>

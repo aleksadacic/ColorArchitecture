@@ -11,11 +11,11 @@ npm run build   # vue-tsc + vite build
 
 Each usage method has its own page (hash routes via `vue-router`, defined in `src/router.ts`):
 
-| Page | Route | Sections |
+| Page | Route | Shows |
 |---|---|---|
-| Raw constants | `#/raw` | 1, 1b |
-| `usePalette()` | `#/palette` | 2 |
-| Direct Tailwind | `#/tailwind` | 3a-3d |
+| Raw constants | `#/raw` | fixed `Colors` values; the active scheme's `Colors.light` or `Colors.dark` |
+| `usePalette()` | `#/palette` | theme-resolved hex values |
+| Direct Tailwind | `#/tailwind` | primary ramp, `light-`/`dark-` pairs, status and brand classes, semantic tokens |
 
 ## What is copied (faithful port, bugs included)
 

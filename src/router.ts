@@ -6,9 +6,9 @@ import TailwindPage from '@/pages/TailwindPage.vue';
 
 // One page per usage method. Hash history so the static build works without server rewrites.
 export const pages = [
-  { path: '/raw', num: '1', label: 'Raw constants', component: RawPage },
-  { path: '/palette', num: '2', label: 'usePalette()', component: PalettePage },
-  { path: '/tailwind', num: '3', label: 'Direct Tailwind', component: TailwindPage },
+  { path: '/raw', label: 'Raw constants', component: RawPage },
+  { path: '/palette', label: 'usePalette()', component: PalettePage },
+  { path: '/tailwind', label: 'Direct Tailwind', component: TailwindPage },
 ] as const;
 
 export const router = createRouter({

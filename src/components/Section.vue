@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ id: string; num: string; title: string; code: string; note?: string }>();
+defineProps<{ id: string; title: string; code: string; note?: string }>();
 </script>
 
 <template>
@@ -7,12 +7,7 @@ defineProps<{ id: string; num: string; title: string; code: string; note?: strin
     :id="id"
     class="rounded-3xl border border-border bg-surface p-5 sm:p-7"
   >
-    <header class="mb-5 flex items-start gap-4">
-      <span
-        class="mt-0.5 flex h-9 min-w-9 items-center justify-center rounded-xl bg-primary-100 px-2 text-sm font-black text-primary-700 dark:bg-primary-950 dark:text-primary-300"
-      >
-        {{ num }}
-      </span>
+    <header class="mb-5">
       <div class="min-w-0">
         <h2 class="text-xl font-black tracking-tight">{{ title }}</h2>
         <code

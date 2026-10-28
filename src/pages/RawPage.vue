@@ -12,10 +12,10 @@ const rawScheme = computed(() => Object.entries(Colors[scheme.value]));
 </script>
 
 <template>
-  <Section id="raw" num="1" title="Raw Colors constants" code="style=&quot;background: Colors.x&quot;" note="Not theme-aware: a fixed value regardless of mode.">
+  <Section id="raw" title="Raw Colors constants" code="style=&quot;background: Colors.x&quot;" note="Not theme-aware: a fixed value regardless of mode.">
     <Swatch v-for="[k, v] in rawBrand" :key="k" :label="`Colors.${k}`" :value="v" :swatch-style="{ background: v }" />
   </Section>
-  <Section id="raw-1b" num="1b" :title="`Colors.${scheme}`" code="Colors[scheme][key]" note="Only the active scheme; flips with the toggle.">
+  <Section id="raw-scheme" :title="`Colors.${scheme}`" code="Colors[scheme][key]" note="Only the active scheme; flips with the toggle.">
     <Swatch v-for="[k, v] in rawScheme" :key="k" :label="`${scheme}.${k}`" :value="v" :swatch-style="{ background: v }" />
   </Section>
 </template>

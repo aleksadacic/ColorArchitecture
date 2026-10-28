@@ -10,7 +10,7 @@ const paletteEntries = computed(() => Object.entries(palette.value));
 </script>
 
 <template>
-  <Section id="palette" num="2" title="usePalette()" code=":style=&quot;{ background: palette.x }&quot;" note="Theme-resolved hex; flips with the toggle.">
+  <Section id="palette" title="usePalette()" code=":style=&quot;{ background: palette.x }&quot;" note="Theme-resolved hex; flips with the toggle.">
     <Swatch v-for="[k, v] in paletteEntries" :key="k" :label="`palette.${k}`" :value="v" :swatch-style="{ background: v }" />
   </Section>
 </template>
