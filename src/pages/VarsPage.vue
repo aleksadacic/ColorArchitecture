@@ -4,8 +4,8 @@ import { computed } from 'vue';
 import ColorSections from '@/components/ColorSections.vue';
 import SvgExample from '@/components/examples/SvgExample.vue';
 import Section from '@/components/Section.vue';
-import { color } from '@/constants/Colors';
 import { usePalette } from '@/hooks/usePalette';
+import { color } from '@/utils/colors';
 import { methodSections, swatchStyle } from '@/utils/colorSections';
 
 const palette = usePalette();

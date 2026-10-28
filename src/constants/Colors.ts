@@ -64,15 +64,3 @@ export type ColorName = BrandColor | RampColor | ThemeColor;
 export const BrandColors = Object.keys(Brand) as BrandColor[];
 export const RampColors = Object.keys(PrimaryRamp).map((step) => `primary${step}`) as RampColor[];
 export const ThemeColors = Object.keys(light) as ThemeColor[];
-
-// `surfaceMuted` -> `surface-muted`, `primary500` -> `primary-500`: the CSS variable and class name.
-export const cssName = (name: ColorName) => name.replace(/([a-z])([A-Z0-9])/g, '$1-$2').toLowerCase();
-
-// A reference for inline styles: `style={{ background: color('surface') }}`. Follows the theme on its own.
-export const color = (name: ColorName) => `var(--color-${cssName(name)})`;
-
-// Every color's value in one mode, keyed by name. Used to generate the CSS and by `usePalette()`.
-export function colorValues(scheme: keyof typeof Theme): Record<ColorName, string> {
-  const ramp = Object.fromEntries(Object.entries(PrimaryRamp).map(([step, v]) => [`primary${step}`, v]));
-  return { ...Brand, ...ramp, ...Theme[scheme] } as Record<ColorName, string>;
-}

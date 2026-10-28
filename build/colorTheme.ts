@@ -2,7 +2,8 @@ import { fileURLToPath } from 'node:url';
 
 import { normalizePath, Plugin } from 'vite';
 
-import { colorValues, cssName, ColorName, ThemeColors } from '../src/constants/Colors';
+import { ColorName, ThemeColors } from '../src/constants/Colors';
+import { colorValues, cssName } from '../src/utils/colors';
 
 const MARKER = '/* @color-theme */';
 // Vite module ids use forward slashes; fileURLToPath gives backslashes on Windows.

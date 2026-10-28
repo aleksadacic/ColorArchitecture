@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { color } from '@/constants/Colors';
+import { color } from '@/utils/colors';
 
 // Inline SVG is part of the page, so CSS colors reach it and follow the theme with no JavaScript.
 // `usePalette()` is only needed for an SVG that leaves the page (an <img src>, a data URL, a download).
