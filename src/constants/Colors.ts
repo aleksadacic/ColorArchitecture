@@ -1,4 +1,4 @@
-// Full brand ramp; Tailwind's `primary-50` ... `primary-950` are generated from it (see FIXES.md item 7).
+// Full brand ramp; Tailwind's `primary-50` ... `primary-950` are generated from it.
 export const PrimaryRamp = {
   50: '#fff2f0',
   100: '#ffe1dd',

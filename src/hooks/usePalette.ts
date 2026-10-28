@@ -4,7 +4,7 @@ import { Colors } from '@/constants/Colors';
 import { useEffectiveColorScheme } from '@/hooks/useEffectiveColorScheme';
 
 // Brand colors are fixed; the rest comes from the active scheme. Built from `Colors` so adding a
-// color is one edit (see FIXES.md items 6 and 15).
+// color is one edit.
 const { light, dark, ...brand } = Colors;
 
 // Fails type-checking if `Colors.light` and `Colors.dark` ever stop having the same keys.

@@ -1,7 +1,7 @@
 import { Colors, PrimaryRamp } from './src/constants/Colors';
 
 // `Colors.light.foregroundMuted` -> `light-foreground-muted`, etc. Generated so the token names
-// cannot drift from `Colors` (see FIXES.md item 6).
+// cannot drift from `Colors`.
 const kebab = (s) => s.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
 const themeTokens = Object.fromEntries(
   ['light', 'dark'].flatMap((scheme) =>
@@ -9,15 +9,15 @@ const themeTokens = Object.fromEntries(
   ),
 );
 
-// Fixed brand colors other than the primary ramp: `success`, `info`, ..., `messageSentBackground` ->
-// `message-sent-background`. Gives status colors Tailwind classes (see FIXES.md item 8).
+// Fixed brand colors other than the primary ramp: `success`, `info`, ..., `customColor` ->
+// `custom-color`. Gives status colors Tailwind classes.
 const brandTokens = Object.fromEntries(
   Object.entries(Colors)
     .filter(([key, value]) => typeof value === 'string' && !key.startsWith('primary'))
     .map(([key, value]) => [kebab(key), value]),
 );
 
-// Semantic tokens (FIXES.md item 9): one class per role, e.g. `bg-canvas`, backed by
+// Semantic tokens: one class per role, e.g. `bg-canvas`, backed by
 // `--theme-canvas`. The plugin below sets the variables from `Colors.light` on :root and from
 // `Colors.dark` on .dark, so the theme switches without `dark:` pairs.
 const semanticTokens = Object.fromEntries(
