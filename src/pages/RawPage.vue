@@ -1,21 +1,60 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-import Section from '@/components/Section.vue';
-import Swatch from '@/components/Swatch.vue';
+import ColorSections from '@/components/ColorSections.vue';
 import { Colors } from '@/constants/Colors';
 import { useEffectiveColorScheme } from '@/hooks/useEffectiveColorScheme';
+import { brandKeys, byRole, ColorSection, fill, ink, outline } from '@/utils/colorRoles';
 
 const scheme = useEffectiveColorScheme();
-const rawBrand = Object.entries(Colors).filter(([, v]) => typeof v === 'string') as [string, string][];
-const rawScheme = computed(() => Object.entries(Colors[scheme.value]));
+const brand = brandKeys.map((k) => [k, Colors[k] as string] as const);
+
+const sections = computed<ColorSection[]>(() => {
+  const s = scheme.value;
+  const entries = Object.entries(Colors[s]);
+  const note = 'Only the active scheme; flips with the toggle.';
+  return [
+    {
+      id: 'raw-brand',
+      title: 'Raw Colors constants',
+      code: 'style="background: Colors.x"',
+      note: 'Not theme-aware: a fixed value regardless of mode.',
+      items: brand.map(([k, v]) => ({ label: `Colors.${k}`, value: v, swatchStyle: fill(v) })),
+    },
+    {
+      id: 'raw-brand-text',
+      title: 'Raw Colors constants as text',
+      code: 'style="color: Colors.x"',
+      note: 'On the current surface. Not theme-aware, so some values (e.g. white) disappear in one of the modes.',
+      text: true,
+      items: brand.map(([k, v]) => ({ label: `Colors.${k}`, value: v, swatchStyle: ink(v) })),
+    },
+    {
+      id: 'raw-text',
+      title: `Colors.${s}: text`,
+      code: 'style="color: Colors[scheme].foreground"',
+      note,
+      text: true,
+      items: byRole(entries, 'text').map(([k, v]) => ({ label: `${s}.${k}`, value: v, swatchStyle: ink(v) })),
+    },
+    {
+      id: 'raw-surfaces',
+      title: `Colors.${s}: surfaces`,
+      code: 'style="background: Colors[scheme].surface"',
+      note,
+      items: byRole(entries, 'surface').map(([k, v]) => ({ label: `${s}.${k}`, value: v, swatchStyle: fill(v) })),
+    },
+    {
+      id: 'raw-borders',
+      title: `Colors.${s}: borders`,
+      code: 'style="border-color: Colors[scheme].border"',
+      note,
+      items: byRole(entries, 'border').map(([k, v]) => ({ label: `${s}.${k}`, value: v, swatchStyle: outline(v) })),
+    },
+  ];
+});
 </script>
 
 <template>
-  <Section id="raw" title="Raw Colors constants" code="style=&quot;background: Colors.x&quot;" note="Not theme-aware: a fixed value regardless of mode.">
-    <Swatch v-for="[k, v] in rawBrand" :key="k" :label="`Colors.${k}`" :value="v" :swatch-style="{ background: v }" />
-  </Section>
-  <Section id="raw-scheme" :title="`Colors.${scheme}`" code="Colors[scheme][key]" note="Only the active scheme; flips with the toggle.">
-    <Swatch v-for="[k, v] in rawScheme" :key="k" :label="`${scheme}.${k}`" :value="v" :swatch-style="{ background: v }" />
-  </Section>
+  <ColorSections :sections="sections" />
 </template>
