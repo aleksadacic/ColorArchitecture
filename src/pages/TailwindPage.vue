@@ -29,7 +29,6 @@ const ramp = Object.keys(PrimaryRamp);
     <Swatch label="bg-warning" swatch-class="bg-warning" />
     <Swatch label="bg-error" swatch-class="bg-error" />
     <Swatch label="bg-hint" swatch-class="bg-hint" />
-    <Swatch label="bg-message-sent-background" swatch-class="bg-message-sent-background" />
     <Swatch label="text-dark-foreground-subtle (fixed)" swatch-class="text-2xl font-bold bg-black text-dark-foreground-subtle">Aa</Swatch>
   </Section>
   <Section
