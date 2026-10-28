@@ -6,11 +6,11 @@ import SvgExample from '@/components/examples/SvgExample.vue';
 import Section from '@/components/Section.vue';
 import { color } from '@/constants/Colors';
 import { usePalette } from '@/hooks/usePalette';
-import { methodSections, swatchStyle } from '@/utils/colorRoles';
+import { methodSections, swatchStyle } from '@/utils/colorSections';
 
 const palette = usePalette();
 
-const property = { fill: 'background', text: 'color', border: 'border-color' } as const;
+const property = { fill: 'background', text: 'color' } as const;
 
 // `palette` only supplies the resolved hex shown under each swatch; the swatch itself uses `var()`.
 const sections = computed(() =>

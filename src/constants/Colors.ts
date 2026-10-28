@@ -1,4 +1,4 @@
-// The single source of truth for colors. vite.config.ts generates the Tailwind theme from this file and
+// The single source of truth for colors. build/colorTheme.ts generates the Tailwind theme from this file and
 // injects it into src/style.css at build time; no CSS file may define `--color-*` itself (the build fails).
 // Each key becomes a CSS variable and Tailwind classes by kebab-casing it: `surfaceMuted` ->
 // `--color-surface-muted` -> `bg-surface-muted`; `PrimaryRamp[500]` -> `--color-primary-500`.
@@ -55,10 +55,10 @@ const dark = {
 
 export const Theme = { light, dark } as const;
 
+export type ThemeColor = keyof typeof light;
 export type BrandColor = keyof typeof Brand;
 export type PrimaryRampStep = keyof typeof PrimaryRamp;
 export type RampColor = `primary${PrimaryRampStep}`;
-export type ThemeColor = keyof typeof light;
 export type ColorName = BrandColor | RampColor | ThemeColor;
 
 export const BrandColors = Object.keys(Brand) as BrandColor[];

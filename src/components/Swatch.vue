@@ -6,7 +6,7 @@ defineProps<{ label: string; value?: string; swatchClass?: string; swatchStyle?:
 <template>
   <div class="min-w-0">
     <div
-      class="flex h-20 items-center justify-center rounded-2xl border border-black/10 dark:border-white/10"
+      class="flex h-20 items-center justify-center rounded-2xl border border-border"
       :class="swatchClass"
       :style="swatchStyle"
     >

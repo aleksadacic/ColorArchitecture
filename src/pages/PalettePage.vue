@@ -6,11 +6,11 @@ import CanvasExample from '@/components/examples/CanvasExample.vue';
 import ShaderExample from '@/components/examples/ShaderExample.vue';
 import Section from '@/components/Section.vue';
 import { usePalette } from '@/hooks/usePalette';
-import { methodSections, swatchStyle } from '@/utils/colorRoles';
+import { methodSections, swatchStyle } from '@/utils/colorSections';
 
 const palette = usePalette();
 
-const property = { fill: 'background', text: 'color', border: 'borderColor' } as const;
+const property = { fill: 'background', text: 'color' } as const;
 
 const sections = computed(() =>
   methodSections({

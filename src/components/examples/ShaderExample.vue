@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
-import { toRgb } from '@/hooks/usePalette';
+import { toRgb } from '@/utils/hex';
 
 // A minimal WebGL fragment shader with three color uniforms. Shader libraries (e.g. Paper Shaders) take
 // colors the same way: as values passed from JavaScript, which `var(--color-*)` can't provide.

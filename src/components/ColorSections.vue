@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Section from '@/components/Section.vue';
 import Swatch from '@/components/Swatch.vue';
-import type { ColorSection } from '@/utils/colorRoles';
+import type { ColorSection } from '@/utils/colorSections';
 
 defineProps<{ sections: ColorSection[] }>();
 </script>

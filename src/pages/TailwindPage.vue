@@ -2,9 +2,9 @@
 import { computed } from 'vue';
 
 import ColorSections from '@/components/ColorSections.vue';
-import { BrandColor, ColorName, RampColor } from '@/constants/Colors';
+import { BrandColor, ColorName } from '@/constants/Colors';
 import { usePalette } from '@/hooks/usePalette';
-import { BorderThemeColor, methodSections, SurfaceThemeColor, TextThemeColor } from '@/utils/colorRoles';
+import { methodSections } from '@/utils/colorSections';
 
 const palette = usePalette();
 
@@ -32,11 +32,15 @@ const bg = {
   primary800: 'bg-primary-800',
   primary900: 'bg-primary-900',
   primary950: 'bg-primary-950',
+  foreground: 'bg-foreground',
+  foregroundMuted: 'bg-foreground-muted',
+  foregroundSubtle: 'bg-foreground-subtle',
   surface: 'bg-surface',
   canvas: 'bg-canvas',
   canvasPrimary: 'bg-canvas-primary',
+  border: 'bg-border',
   surfaceMuted: 'bg-surface-muted',
-} satisfies Record<BrandColor | RampColor | SurfaceThemeColor, string>;
+} satisfies Record<ColorName, string>;
 
 const text = {
   primary: 'text-primary',
@@ -48,25 +52,16 @@ const text = {
   black: 'text-black',
   white: 'text-white',
   customColor: 'text-custom-color',
-  foreground: 'text-foreground',
-  foregroundMuted: 'text-foreground-muted',
-  foregroundSubtle: 'text-foreground-subtle',
-} satisfies Record<BrandColor | TextThemeColor, string>;
+} satisfies Record<BrandColor, string>;
 
-// `!` so the border color wins over the swatch's default outline.
-const border = {
-  border: 'border-4 border-border!',
-} satisfies Record<BorderThemeColor, string>;
-
-const maps = { fill: bg as Record<string, string>, text: text as Record<string, string>, border: border as Record<string, string> };
-const label = (cls: string) => cls.replace('border-4 ', '').replace('!', '');
+const maps = { fill: bg as Record<string, string>, text: text as Record<string, string> };
 
 const sections = computed(() =>
   methodSections({
     id: 'tailwind',
     name: 'Direct Tailwind',
-    code: (n, kind) => `class="${label(maps[kind][n])}"`,
-    item: (n: ColorName, kind) => ({ label: label(maps[kind][n]), value: palette.value[n], swatchClass: maps[kind][n] }),
+    code: (n, kind) => `class="${maps[kind][n]}"`,
+    item: (n: ColorName, kind) => ({ label: maps[kind][n], value: palette.value[n], swatchClass: maps[kind][n] }),
   }),
 );
 </script>

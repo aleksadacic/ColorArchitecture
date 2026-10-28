@@ -2,29 +2,15 @@ import { definePreset, palette } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 
 import { Brand, PrimaryRamp, Theme } from '@/constants/Colors';
+import { hexToRgb, rgbToHex } from '@/utils/hex';
 
 // PrimeVue's theme, adapted from src/constants/Colors.ts. PrimeVue is an example of compatibility: it
 // reads our palette and never shapes it. Built on Aura: only the color tokens are replaced; spacing, radii
 // and component structure stay Aura's.
-//
-// - `primary` is our PrimaryRamp. Aura's `primary.color` is step 500 (400 in dark); ours is the brand
-//   primary (step 600) in both modes, like the rest of the app.
-// - `surface` is a 0-950 neutral scale PrimeVue needs and our palette doesn't have. It is built here from
-//   the theme colors: each one is pinned to the step Aura uses for that role, and the steps between are
-//   blended from their neighbours. Aura's component tokens reference these steps, so every component
-//   picks up our neutrals.
-// - The role tokens our app defines (text, muted text, content background, borders) are set to our theme
-//   colors directly, where Aura would pick a different surface step.
-// - Severity colors (success, info, warn, danger, help) use Aura's `green`, `sky`, `orange`, `red` and
-//   `purple` scales. They are regenerated from our status colors with `palette()`, which keeps the input
-//   at step 500, the step Aura uses for the base color.
 
 type ThemeValues = (typeof Theme)['light' | 'dark'];
 type SurfaceStep = 0 | 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
 const steps: SurfaceStep[] = [0, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-
-const hexToRgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
-const rgbToHex = (rgb: number[]) => `#${rgb.map((c) => Math.round(c).toString(16).padStart(2, '0')).join('')}`;
 
 // Fills every step between the pinned ones by blending linearly (by step number) between its neighbours.
 function surfaceScale(pinned: Partial<Record<SurfaceStep, string>>): Record<SurfaceStep, string> {
@@ -71,7 +57,7 @@ const roles = (t: ThemeValues) => ({
 });
 
 const primaryColor = {
-  color: '{primary.600}',
+  color: Brand.primary,
   contrastColor: Brand.white,
   hoverColor: '{primary.700}',
   activeColor: '{primary.800}',

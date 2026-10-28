@@ -1,23 +1,9 @@
-import { BrandColors, ColorName, RampColors, ThemeColor, ThemeColors } from '@/constants/Colors';
+import { BrandColors, ColorName, RampColors, ThemeColors } from '@/constants/Colors';
 
 // Shared by the three usage-method pages so each shows the same sections: brand colors, the primary
-// ramp, brand colors as text, then the theme's text, surfaces and borders.
+// ramp, brand colors as text, then the theme colors.
 
-export type ColorRole = 'text' | 'surface' | 'border';
-export type SwatchKind = 'fill' | 'text' | 'border';
-
-// `foreground*` is text, `border*` is borders, every other theme color is a surface.
-export type TextThemeColor = Extract<ThemeColor, `foreground${string}`>;
-export type BorderThemeColor = Extract<ThemeColor, `border${string}`>;
-export type SurfaceThemeColor = Exclude<ThemeColor, TextThemeColor | BorderThemeColor>;
-
-export function colorRole(name: string): ColorRole {
-  if (name.startsWith('foreground')) return 'text';
-  if (name.startsWith('border')) return 'border';
-  return 'surface';
-}
-
-export const themeByRole = (role: ColorRole) => ThemeColors.filter((name) => colorRole(name) === role);
+export type SwatchKind = 'fill' | 'text';
 
 export interface ColorItem {
   label: string;
@@ -46,7 +32,6 @@ export interface UsageMethod {
 
 export function methodSections(m: UsageMethod): ColorSection[] {
   const fixed = 'Same in both modes.';
-  const themed = 'Theme color: switches with the toggle.';
   return [
     {
       id: `${m.id}-brand`,
@@ -71,33 +56,16 @@ export function methodSections(m: UsageMethod): ColorSection[] {
       items: BrandColors.map((n) => m.item(n, 'text')),
     },
     {
-      id: `${m.id}-text`,
-      title: `${m.name}: text`,
-      code: m.code('foreground', 'text'),
-      note: themed,
-      text: true,
-      items: themeByRole('text').map((n) => m.item(n, 'text')),
-    },
-    {
-      id: `${m.id}-surfaces`,
-      title: `${m.name}: surfaces`,
+      id: `${m.id}-theme`,
+      title: `${m.name}: theme colors`,
       code: m.code('surface', 'fill'),
-      note: themed,
-      items: themeByRole('surface').map((n) => m.item(n, 'fill')),
-    },
-    {
-      id: `${m.id}-borders`,
-      title: `${m.name}: borders`,
-      code: m.code('border', 'border'),
-      note: themed,
-      items: themeByRole('border').map((n) => m.item(n, 'border')),
+      note: 'Switch with the toggle.',
+      items: ThemeColors.map((n) => m.item(n, 'fill')),
     },
   ];
 }
 
 // Inline-style swatch for a color given as a CSS value (`var(--color-*)` or a hex).
 export function swatchStyle(value: string, kind: SwatchKind): Record<string, string> {
-  if (kind === 'text') return { color: value };
-  if (kind === 'border') return { borderColor: value, borderWidth: '4px' };
-  return { background: value };
+  return kind === 'text' ? { color: value } : { background: value };
 }

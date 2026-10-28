@@ -1,14 +1,6 @@
 <script setup lang="ts">
-import { watchEffect } from 'vue';
-
-import { useEffectiveColorScheme } from '@/hooks/useEffectiveColorScheme';
 import { pages } from '@/router';
-import { setThemeSetting, themeSetting, ThemeSetting } from '@/stores/useAppPreferencesStore';
-
-const scheme = useEffectiveColorScheme();
-
-// NativeWind does this for RN; on web `darkMode: 'class'` needs the class on <html>.
-watchEffect(() => document.documentElement.classList.toggle('dark', scheme.value === 'dark'));
+import { setThemeSetting, themeSetting, ThemeSetting } from '@/theme/scheme';
 
 const themes: ThemeSetting[] = ['system', 'light', 'dark'];
 </script>

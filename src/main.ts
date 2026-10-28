@@ -12,7 +12,7 @@ createApp(App)
     theme: {
       preset: ColorArchitecturePreset,
       options: {
-        // The class App.vue toggles on <html>; PrimeVue switches with the rest of the app.
+        // The class src/theme/scheme.ts toggles on <html>; PrimeVue switches with the rest of the app.
         darkModeSelector: '.dark',
         // PrimeVue styles go in their own cascade layer after Tailwind's theme and base, so Tailwind
         // utilities on a component always win.

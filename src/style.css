@@ -2,7 +2,7 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Colors are not defined here. vite.config.ts generates them from src/constants/Colors.ts and injects them
+/* Colors are not defined here. build/colorTheme.ts generates them from src/constants/Colors.ts and injects them
    at the marker below: a `@theme static` block with every `--color-*` (light values) and a `.dark` block
    overriding the theme colors. Defining `--color-*` in any CSS fails the build. */
 /* @color-theme */

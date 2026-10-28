@@ -90,7 +90,7 @@ const orders = [
     id="primevue-table"
     title="PrimeVue: data table"
     code="<DataTable :value=&quot;orders&quot; />"
-    note="Row backgrounds, borders and text use the content and text role colors from Colors.ts."
+    note="Row backgrounds, borders and text use the theme colors from Colors.ts."
   >
     <div class="col-span-full">
       <DataTable :value="orders" size="small">
