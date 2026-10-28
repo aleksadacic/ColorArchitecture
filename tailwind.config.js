@@ -31,18 +31,6 @@ module.exports = {
   darkMode: 'class',
   content: ['./index.html', './src/**/*.{vue,ts}'],
   // RN original: presets: [require('nativewind/preset')],
-  safelist: [
-    {
-      pattern: /^(bg|text|border)-primary-(50|100|200|300|400|500|600|700|800|900|950)$/,
-    },
-    { pattern: /^gap-(1|2|3|4|5|6|8|9|10|20)$/ },
-    { pattern: /^border$/, variants: ['dark'] },
-    { pattern: /^(bg|text|border|fill|stroke)-primary$/, variants: ['dark'] },
-    {
-      pattern: /(bg|border|text|stroke|fill)-(light|dark)-(foreground|border|canvas|surface|foreground-muted|foreground-subtle|surface-muted)$/,
-      variants: ['dark'],
-    },
-  ],
   theme: {
     extend: {
       colors: {

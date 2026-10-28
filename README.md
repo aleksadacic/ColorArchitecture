@@ -30,7 +30,7 @@ Each usage method has its own page (hash routes via `vue-router`, defined in `sr
 ## Tailwind 4 notes
 
 - `@config '../tailwind.config.js'` loads the legacy JS config unchanged.
-- v4 ignores `safelist`, so its patterns are re-declared with `@source inline(...)` in `src/style.css`.
+- There is no safelist: every class is written out in full in the source, so Tailwind's scan finds it.
 - `darkMode: 'class'` is re-declared with `@custom-variant dark`; `App.vue` toggles `.dark` on `<html>`.
 
 ## Deliberate deviations from the RN app
@@ -38,7 +38,8 @@ Each usage method has its own page (hash routes via `vue-router`, defined in `sr
 - The `light-dark-tertiary` token typo is fixed as `light-foreground-subtle` / `dark-foreground-subtle`.
 - The no-op `dark:` classes and the `usePaletteClass` hook are removed; classes are written directly.
 - The `light-*`/`dark-*` Tailwind tokens and `usePalette` are generated from `Colors` instead of listed by hand.
-- The `primary` 50-950 ramp lives in `Colors.ts` as `PrimaryRamp`; `Colors.primary*` and Tailwind read from it.
+- The `primary` 50-950 ramp lives in `Colors.ts` as `PrimaryRamp`; `Colors.primary`, Tailwind and `usePalette()` (`primary50` ... `primary950`) read from it.
+- The safelist is removed; nothing builds class names from variables. On the Direct Tailwind page each class map is checked with `satisfies` against the `Colors` keys, so a new color without a class fails `vue-tsc`.
 - Fixed brand and status colors (`success`, `info`, `warning`, `error`, `hint`, ...) have generated Tailwind classes.
 - Semantic tokens (`bg-canvas`, `text-foreground-muted`, ...) backed by `--theme-*` CSS variables switch with the theme without `dark:` pairs. The demo layout uses them.
 - The hand-copied `rgba()` alpha literals and the unused shadcn HSL variables are removed.

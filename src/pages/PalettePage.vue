@@ -3,14 +3,15 @@ import { computed } from 'vue';
 
 import ColorSections from '@/components/ColorSections.vue';
 import { usePalette } from '@/hooks/usePalette';
-import { brandKeys, byRole, ColorSection, fill, ink, outline } from '@/utils/colorRoles';
+import { brandKeys, byRole, ColorSection, fill, ink, outline, rampSteps } from '@/utils/colorRoles';
 
 const palette = usePalette();
 
 const sections = computed<ColorSection[]>(() => {
   const entries = Object.entries(palette.value) as [string, string][];
   const brand = entries.filter(([k]) => (brandKeys as string[]).includes(k));
-  const themed = entries.filter(([k]) => !(brandKeys as string[]).includes(k));
+  const rampKeys = rampSteps.map((step) => `primary${step}`);
+  const themed = entries.filter(([k]) => !(brandKeys as string[]).includes(k) && !rampKeys.includes(k));
   const note = 'Theme-resolved hex; flips with the toggle.';
   return [
     {
@@ -19,6 +20,16 @@ const sections = computed<ColorSection[]>(() => {
       code: ':style="{ background: palette.x }"',
       note: 'Same value in both modes.',
       items: brand.map(([k, v]) => ({ label: `palette.${k}`, value: v, swatchStyle: fill(v) })),
+    },
+    {
+      id: 'palette-ramp',
+      title: 'usePalette(): primary ramp',
+      code: ':style="{ background: palette.primary500 }"',
+      note: 'The full brand ramp as primary50 ... primary950; same in both modes.',
+      items: rampKeys.map((k) => {
+        const v = palette.value[k as keyof typeof palette.value];
+        return { label: `palette.${k}`, value: v, swatchStyle: fill(v) };
+      }),
     },
     {
       id: 'palette-brand-text',

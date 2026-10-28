@@ -15,8 +15,6 @@ export const PrimaryRamp = {
 
 export const Colors = {
   primary: PrimaryRamp[600],
-  primary200: PrimaryRamp[200],
-  primary300: PrimaryRamp[300],
   success: '#0E9F58',
   info: '#377DFF',
   warning: '#E5A000',

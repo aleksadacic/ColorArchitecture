@@ -1,7 +1,7 @@
-import { Colors } from '@/constants/Colors';
+import { Colors, PrimaryRamp } from '@/constants/Colors';
 
-// Shared by the three usage-method pages so each shows the same sections: brand colors (as fills and as
-// text), then the active scheme's text, surfaces and borders.
+// Shared by the three usage-method pages so each shows the same sections: brand colors, the primary
+// ramp, brand colors as text, then the active scheme's text, surfaces and borders.
 
 export type ColorRole = 'text' | 'surface' | 'border';
 
@@ -22,10 +22,13 @@ export interface ColorSection {
   items: ColorItem[];
 }
 
-// Fixed brand colors, in `Colors` order (`primary`, `primary200`, ..., `customColor`).
+// Fixed brand colors, in `Colors` order (`primary`, `success`, ..., `customColor`).
 export const brandKeys = Object.keys(Colors).filter(
   (k) => typeof Colors[k as keyof typeof Colors] === 'string',
 ) as (keyof typeof Colors)[];
+
+// Steps of the primary ramp: `50`, `100`, ..., `950`.
+export const rampSteps = Object.keys(PrimaryRamp) as `${keyof typeof PrimaryRamp}`[];
 
 // `foreground*` is text, `border*` is borders, everything else in a scheme is a surface.
 export function colorRole(key: string): ColorRole {
