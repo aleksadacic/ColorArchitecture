@@ -33,7 +33,7 @@ const orders = [
     id="primevue-buttons"
     title="PrimeVue: buttons"
     code="<Button severity=&quot;success&quot; />"
-    note="Primary is PrimaryRamp; success, info, warn, danger and help are our status colors (palette() keeps each at step 500); secondary and contrast come from the neutral ramp."
+    note="Primary is PrimaryRamp; success, info, warn, danger and help are our status colors (palette() keeps each at step 500); secondary and contrast come from the surface scale the preset builds from our theme colors."
   >
     <div class="col-span-full flex flex-col gap-3">
       <div class="flex flex-wrap gap-2">
@@ -55,7 +55,7 @@ const orders = [
     id="primevue-forms"
     title="PrimeVue: form controls"
     code="<InputText /> <Select /> <Checkbox /> <ToggleSwitch />"
-    note="Field backgrounds and borders are neutral ramp steps; focus and checked states use the primary color."
+    note="Field backgrounds and borders are surface steps built from our theme colors; focus and checked states use the primary color."
   >
     <div class="col-span-full grid gap-4 sm:grid-cols-2">
       <InputText v-model="name" placeholder="Your name" />

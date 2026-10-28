@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 
 import ColorSections from '@/components/ColorSections.vue';
-import { BrandColor, ColorName, NeutralColor, RampColor } from '@/constants/Colors';
+import { BrandColor, ColorName, RampColor } from '@/constants/Colors';
 import { usePalette } from '@/hooks/usePalette';
 import { BorderThemeColor, methodSections, SurfaceThemeColor, TextThemeColor } from '@/utils/colorRoles';
 
@@ -32,23 +32,11 @@ const bg = {
   primary800: 'bg-primary-800',
   primary900: 'bg-primary-900',
   primary950: 'bg-primary-950',
-  neutral0: 'bg-neutral-0',
-  neutral50: 'bg-neutral-50',
-  neutral100: 'bg-neutral-100',
-  neutral200: 'bg-neutral-200',
-  neutral300: 'bg-neutral-300',
-  neutral400: 'bg-neutral-400',
-  neutral500: 'bg-neutral-500',
-  neutral600: 'bg-neutral-600',
-  neutral700: 'bg-neutral-700',
-  neutral800: 'bg-neutral-800',
-  neutral900: 'bg-neutral-900',
-  neutral950: 'bg-neutral-950',
   surface: 'bg-surface',
   canvas: 'bg-canvas',
   canvasPrimary: 'bg-canvas-primary',
   surfaceMuted: 'bg-surface-muted',
-} satisfies Record<BrandColor | RampColor | NeutralColor | SurfaceThemeColor, string>;
+} satisfies Record<BrandColor | RampColor | SurfaceThemeColor, string>;
 
 const text = {
   primary: 'text-primary',

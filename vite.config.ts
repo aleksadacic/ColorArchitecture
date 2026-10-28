@@ -4,15 +4,15 @@ import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import { defineConfig, normalizePath, Plugin } from 'vite';
 
-import { colorValues, cssName, ColorName, ThemedColors } from './src/constants/Colors';
+import { colorValues, cssName, ColorName, ThemeColors } from './src/constants/Colors';
 
 const MARKER = '/* @color-theme */';
 // Vite module ids use forward slashes; fileURLToPath gives backslashes on Windows.
 const styleCss = normalizePath(fileURLToPath(new URL('./src/style.css', import.meta.url)));
 
 // The Tailwind theme for every color in src/constants/Colors.ts: all of them in `@theme` (light values),
-// then the theme-dependent ones (neutral ramp and role colors) again under `.dark`. `static` emits each
-// variable even when no class uses it, since inline styles reference them with `var()`.
+// then the theme colors again under `.dark`. `static` emits each variable even when no class uses it,
+// since inline styles reference them with `var()`.
 function themeCss(): string {
   const decl = (values: Record<string, string>, names: string[], indent: string) =>
     names.map((n) => `${indent}--color-${cssName(n as ColorName)}: ${values[n]};`).join('\n');
@@ -24,7 +24,7 @@ function themeCss(): string {
     '}',
     '@layer base {',
     '  .dark {',
-    decl(dark, ThemedColors, '    '),
+    decl(dark, ThemeColors, '    '),
     '  }',
     '}',
   ].join('\n');

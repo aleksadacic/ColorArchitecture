@@ -13,12 +13,11 @@ npm run build   # vue-tsc + vite build
 ## How colors work
 
 - **Values live in TypeScript.** `src/constants/Colors.ts` is the single source of truth: the primary
-  ramp (`PrimaryRamp`), fixed brand and status colors (`Brand`), a neutral ramp per theme
-  (`NeutralRamp.light` / `.dark`, 0-950), and the theme colors by role (`Theme.light` / `Theme.dark`,
-  which must have the same keys and are steps of the neutral ramps). Names are camelCase; CSS and classes use the kebab-case
+  ramp (`PrimaryRamp`), fixed brand and status colors (`Brand`), and the theme colors (`Theme.light` /
+  `Theme.dark`, which must have the same keys). Names are camelCase; CSS and classes use the kebab-case
   form (`surfaceMuted` -> `--color-surface-muted` -> `bg-surface-muted`, `primary500` -> `bg-primary-500`).
 - **The CSS is generated in memory.** A Vite plugin in `vite.config.ts` builds a `@theme static` block
-  (every color, light values) and a `.dark { ... }` block (neutral ramp and role colors) from `Colors.ts`, and injects
+  (every color, light values) and a `.dark { ... }` block (theme colors) from `Colors.ts`, and injects
   them into `src/style.css` at the `/* @color-theme */` marker. No generated file exists on disk, so
   there is nothing to edit by mistake. Editing `Colors.ts` restarts the dev server and the page reloads.
 - **Colors can't be defined anywhere else.** The same plugin fails the build when any CSS file or Vue
@@ -31,12 +30,14 @@ npm run build   # vue-tsc + vite build
 ## PrimeVue
 
 PrimeVue is pinned to **4.5.5** with `@primeuix/themes` **2.0.3**, the last MIT-licensed releases
-(PrimeVue 5 and `@primeuix/themes` 3 moved to the commercial PrimeUI license). It runs in styled mode with
-a preset generated from `Colors.ts` in `src/theme/primevuePreset.ts`, built on Aura:
+(PrimeVue 5 and `@primeuix/themes` 3 moved to the commercial PrimeUI license). It is here as an example
+of compatibility, not as the driver of the palette: `Colors.ts` knows nothing about PrimeVue, and
+`src/theme/primevuePreset.ts` adapts it into a preset built on Aura, running in styled mode:
 
 - `primary` is `PrimaryRamp`; the primary color is the brand primary (step 600) in both modes.
-- `surface` is the theme's `NeutralRamp`, so every Aura component token that references a neutral step
-  uses ours. Text, muted text, content background and border are set to our role colors.
+- `surface` is a 0-950 neutral scale built in the preset, since PrimeVue needs one and our palette has
+  none: each theme color is pinned to the step Aura uses for its role, and the steps between are blended
+  from their neighbours. Text, muted text, content background and border are set to our theme colors.
 - Aura's severity scales (`green`, `sky`, `orange`, `red`, `purple`) are regenerated from our status colors
   with `palette()`, which keeps each at step 500. In dark mode Aura uses step 400 for severities, a
   lighter shade of the same generated scale.
@@ -46,7 +47,7 @@ a preset generated from `Colors.ts` in `src/theme/primevuePreset.ts`, built on A
 ## Pages
 
 One page per usage method plus a PrimeVue demo (hash routes via `vue-router`, `src/router.ts`). The
-method pages show the same sections: brand colors, primary ramp, neutral ramp, brand colors as text, then
+method pages show the same sections: brand colors, primary ramp, brand colors as text, then
 theme text, surfaces and borders.
 
 | Page | Route | Method | Use it for |
