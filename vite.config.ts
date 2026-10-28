@@ -2,12 +2,13 @@ import { fileURLToPath } from 'node:url';
 
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
-import { defineConfig, Plugin } from 'vite';
+import { defineConfig, normalizePath, Plugin } from 'vite';
 
 import { colorValues, cssName, ColorName, ThemedColors } from './src/constants/Colors';
 
 const MARKER = '/* @color-theme */';
-const styleCss = fileURLToPath(new URL('./src/style.css', import.meta.url));
+// Vite module ids use forward slashes; fileURLToPath gives backslashes on Windows.
+const styleCss = normalizePath(fileURLToPath(new URL('./src/style.css', import.meta.url)));
 
 // The Tailwind theme for every color in src/constants/Colors.ts: all of them in `@theme` (light values),
 // then the theme-dependent ones (neutral ramp and role colors) again under `.dark`. `static` emits each
