@@ -55,7 +55,7 @@ const themes: ThemeSetting[] = ['system', 'light', 'dark'];
       <aside class="hidden lg:block">
         <nav class="sticky top-20 flex flex-col gap-1 text-sm font-bold">
           <p class="mb-1 px-3 text-xs uppercase tracking-widest text-foreground-muted">
-            Usage methods
+            Pages
           </p>
           <RouterLink
             v-for="p in pages"

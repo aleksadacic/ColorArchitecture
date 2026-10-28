@@ -1,7 +1,7 @@
-import { BrandColors, ColorName, RampColors, ThemeColor, ThemeColors } from '@/constants/Colors';
+import { BrandColors, ColorName, NeutralColors, RampColors, ThemeColor, ThemeColors } from '@/constants/Colors';
 
-// Shared by the three usage-method pages so each shows the same sections: brand colors, the primary
-// ramp, brand colors as text, then the theme's text, surfaces and borders.
+// Shared by the usage-method pages so each shows the same sections: brand colors, the primary ramp, the
+// neutral ramp, brand colors as text, then the theme's text, surfaces and borders.
 
 export type ColorRole = 'text' | 'surface' | 'border';
 export type SwatchKind = 'fill' | 'text' | 'border';
@@ -61,6 +61,13 @@ export function methodSections(m: UsageMethod): ColorSection[] {
       code: m.code('primary500', 'fill'),
       note: fixed,
       items: RampColors.map((n) => m.item(n, 'fill')),
+    },
+    {
+      id: `${m.id}-neutral`,
+      title: `${m.name}: neutral ramp`,
+      code: m.code('neutral500', 'fill'),
+      note: 'Theme colors: each theme has its own ramp; the role colors below are steps of it.',
+      items: NeutralColors.map((n) => m.item(n, 'fill')),
     },
     {
       id: `${m.id}-brand-text`,

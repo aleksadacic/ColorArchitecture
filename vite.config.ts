@@ -4,14 +4,14 @@ import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import { defineConfig, Plugin } from 'vite';
 
-import { colorValues, cssName, ColorName, ThemeColors } from './src/constants/Colors';
+import { colorValues, cssName, ColorName, ThemedColors } from './src/constants/Colors';
 
 const MARKER = '/* @color-theme */';
 const styleCss = fileURLToPath(new URL('./src/style.css', import.meta.url));
 
 // The Tailwind theme for every color in src/constants/Colors.ts: all of them in `@theme` (light values),
-// then the theme colors again under `.dark`. `static` emits each variable even when no class uses it,
-// since inline styles reference them with `var()`.
+// then the theme-dependent ones (neutral ramp and role colors) again under `.dark`. `static` emits each
+// variable even when no class uses it, since inline styles reference them with `var()`.
 function themeCss(): string {
   const decl = (values: Record<string, string>, names: string[], indent: string) =>
     names.map((n) => `${indent}--color-${cssName(n as ColorName)}: ${values[n]};`).join('\n');
@@ -23,7 +23,7 @@ function themeCss(): string {
     '}',
     '@layer base {',
     '  .dark {',
-    decl(dark, ThemeColors, '    '),
+    decl(dark, ThemedColors, '    '),
     '  }',
     '}',
   ].join('\n');
@@ -32,7 +32,8 @@ function themeCss(): string {
 // Keeps Colors.ts the only place colors are defined:
 // - injects the generated theme into style.css in memory, at the `/* @color-theme */` marker, so there is
 //   no generated file anyone could edit;
-// - fails on any hand-written `--color-*` definition in CSS or a Vue <style> block.
+// - fails on any hand-written `--color-*` (Tailwind) or `--p-*` (PrimeVue) definition in CSS or a Vue
+//   <style> block; PrimeVue's variables come from the preset in src/theme/primevuePreset.ts.
 // Colors.ts is imported by this config, so editing it restarts the dev server and regenerates the theme.
 function colorTheme(): Plugin {
   return {
@@ -43,12 +44,12 @@ function colorTheme(): Plugin {
       const isCss = /\.(css|pcss|postcss)$/.test(file) || /type=style/.test(query);
       if (!isCss || file.includes('/node_modules/')) return null;
 
-      const defined = [...code.matchAll(/--color-[\w-]+\s*:/g)];
+      const defined = [...code.matchAll(/--(?:color|p)-[\w-]+\s*:/g)];
       if (defined.length) {
         const where = defined.map((m) => `line ${code.slice(0, m.index).split('\n').length}: ${m[0].slice(0, -1).trim()}`);
         this.error(
           `${file} defines colors directly (${where.join(', ')}). Colors live in src/constants/Colors.ts; ` +
-            'add them there and the theme is generated from it.',
+            'add them there and the Tailwind theme and PrimeVue preset are generated from it.',
         );
       }
 
