@@ -12,13 +12,27 @@ const styleCss = normalizePath(fileURLToPath(new URL('../src/style.css', import.
 // The Tailwind theme for every color in src/constants/Colors.ts: all of them in `@theme` (light values),
 // then the theme colors again under `.dark`. `static` emits each variable even when no class uses it,
 // since inline styles reference them with `var()`.
+//
+// The block opens with `--color-*: initial`, which removes Tailwind's built-in palette (red-500, zinc-700,
+// ...). Without it those classes still compile and quietly bypass Colors.ts; with it, the only colors that
+// exist are ours, so `bg-red-500` generates no CSS at all. It also means a color missing from the generated
+// theme stays missing instead of falling back to a Tailwind default that looks almost right.
+// `transparent`, `current` and `inherit` are keywords, not theme colors, so they keep working.
+//
+// It also lists a `bg-*` and `text-*` class for every color with `@source inline`, so Tailwind generates
+// them without finding them in the source. Only the Direct Tailwind page relies on this: it shows every
+// color and builds its class names from `cssName()`. Everywhere else, write classes out in full.
 function themeCss(): string {
   const decl = (values: Record<string, string>, names: string[], indent: string) =>
     names.map((n) => `${indent}--color-${cssName(n as ColorName)}: ${values[n]};`).join('\n');
   const light = colorValues('light');
   const dark = colorValues('dark');
+  const names = (Object.keys(light) as ColorName[]).map(cssName);
+  const classes = ['bg', 'text'].flatMap((prefix) => names.map((n) => `${prefix}-${n}`));
   return [
+    `@source inline("${classes.join(' ')}");`,
     '@theme static {',
+    '  --color-*: initial;',
     decl(light, Object.keys(light), '  '),
     '}',
     '@layer base {',

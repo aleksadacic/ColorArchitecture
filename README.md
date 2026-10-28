@@ -26,8 +26,10 @@ npm run build   # vue-tsc + vite build
   (system, light or dark, saved in `localStorage`) and toggles `.dark` on `<html>`; every class and `var()`
   follows without a `dark:` variant. A small script in `index.html` sets the class before the app loads,
   so a dark page never flashes light.
-- **No `tailwind.config.js`, no safelist.** Tailwind 4 reads the theme from the injected CSS, and every
-  class is written out in full so its source scan finds it.
+- **No `tailwind.config.js`, no hand-kept safelist.** Tailwind 4 reads the theme from the injected CSS.
+  App code writes every class out in full so Tailwind's source scan finds it. The one exception is the
+  Direct Tailwind page, which shows every color: the plugin also lists a `bg-*` and `text-*` class for each
+  color with `@source inline`, generated from `Colors.ts`, so the page can build its class names.
 
 ## PrimeVue
 
@@ -62,5 +64,5 @@ theme colors.
 `usePalette()` returns the current theme's values straight from `Colors.ts` (no DOM reads), and
 `toRgb()` in `src/utils/hex.ts` turns a hex into the `[r, g, b]` 0-1 floats WebGL uniforms take.
 
-On the Direct Tailwind page each class map is checked with `satisfies` against the names in `Colors.ts`,
-so a new color without its class fails `vue-tsc`.
+The Direct Tailwind page builds each class as `` `bg-${cssName(name)}` ``, so a new color in `Colors.ts`
+shows up there, with a working class, without touching the page.
