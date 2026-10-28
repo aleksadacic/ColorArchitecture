@@ -1,25 +1,23 @@
 import { computed } from 'vue';
 
-import { Colors, PrimaryRamp } from '@/constants/Colors';
+import { colorValues } from '@/constants/Colors';
 import { useEffectiveColorScheme } from '@/hooks/useEffectiveColorScheme';
 
-// Brand colors are fixed; the rest comes from the active scheme. Built from `Colors` so adding a
-// color is one edit.
-const { light, dark, ...brand } = Colors;
-
-// The full primary ramp as `primary50` ... `primary950`.
-type RampStep = keyof typeof PrimaryRamp;
-const ramp = Object.fromEntries(Object.entries(PrimaryRamp).map(([step, v]) => [`primary${step}`, v])) as {
-  [S in RampStep as `primary${S}`]: (typeof PrimaryRamp)[S];
-};
-
-// Fails type-checking if `Colors.light` and `Colors.dark` ever stop having the same keys.
-type LightKey = keyof typeof light;
-type DarkKey = keyof typeof dark;
-type SameKeys = [LightKey] extends [DarkKey] ? ([DarkKey] extends [LightKey] ? true : false) : false;
-export const themeKeysMatch: SameKeys = true;
-
+// Color values for the current theme, for code that can't take `var(--color-*)`: WebGL/shader uniforms,
+// <canvas> drawing, chart libraries, SVGs used as images. Styling (including inline SVG) should use
+// classes or `color()` from src/constants/Colors.ts instead; those follow the theme without JavaScript.
+// The values come straight from Colors.ts, so this needs no DOM and is always in sync.
 export function usePalette() {
   const scheme = useEffectiveColorScheme();
-  return computed(() => ({ ...brand, ...ramp, ...Colors[scheme.value] }));
+  return computed(() => colorValues(scheme.value));
+}
+
+export type Palette = ReturnType<typeof colorValues>;
+
+// `#rgb` / `#rrggbb` -> `[r, g, b]` in 0-1, the form WebGL uniforms (`vec3`) take.
+export function toRgb(hex: string): [number, number, number] {
+  let h = hex.replace('#', '');
+  if (h.length === 3) h = [...h].map((c) => c + c).join('');
+  const n = parseInt(h, 16);
+  return [(n >> 16) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
 }

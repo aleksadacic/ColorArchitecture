@@ -1,4 +1,8 @@
-// Full brand ramp; Tailwind's `primary-50` ... `primary-950` are generated from it.
+// The single source of truth for colors. vite.config.ts generates the Tailwind theme from this file and
+// injects it into src/style.css at build time; no CSS file may define `--color-*` itself (the build fails).
+// Each key becomes a CSS variable and Tailwind classes by kebab-casing it: `surfaceMuted` ->
+// `--color-surface-muted` -> `bg-surface-muted`; `PrimaryRamp[500]` -> `--color-primary-500`.
+
 export const PrimaryRamp = {
   50: '#fff2f0',
   100: '#ffe1dd',
@@ -13,36 +17,62 @@ export const PrimaryRamp = {
   950: '#500900',
 } as const;
 
-export const Colors = {
+// Fixed brand and status colors; same in both modes.
+export const Brand = {
   primary: PrimaryRamp[600],
-  success: '#0E9F58',
-  info: '#377DFF',
-  warning: '#E5A000',
-  error: '#FF5A5A',
-  hint: '#7C4DFF',
-  black: '#000',
-  white: '#fff',
+  success: '#0e9f58',
+  info: '#377dff',
+  warning: '#e5a000',
+  error: '#ff5a5a',
+  hint: '#7c4dff',
+  black: '#000000',
+  white: '#ffffff',
   customColor: '#fff000',
-  light: {
-    foreground: '#010101',
-    foregroundMuted: '#50514F',
-    foregroundSubtle: '#cacaca',
-    surface: '#fdfdfd',
-    canvas: '#F5F5F5',
-    canvasPrimary: PrimaryRamp[100],
-    border: '#E4E4E4',
-    surfaceMuted: '#EEEEEE',
-  },
-  dark: {
-    foreground: '#f2f2f2',
-    foregroundMuted: '#8e8e8f',
-    foregroundSubtle: '#434347',
-    surface: '#1e1c1e',
-    canvas: '#000',
-    canvasPrimary: PrimaryRamp[950],
-    border: '#333336',
-    surfaceMuted: '#3A3A3D',
-  },
 } as const;
 
-export type ThemeKey = keyof typeof Colors.light;
+// Theme colors; `.dark` overrides the light values. `dark` must have exactly the same keys as `light`.
+const light = {
+  foreground: '#010101',
+  foregroundMuted: '#50514f',
+  foregroundSubtle: '#cacaca',
+  surface: '#fdfdfd',
+  canvas: '#f5f5f5',
+  canvasPrimary: PrimaryRamp[100],
+  border: '#e4e4e4',
+  surfaceMuted: '#eeeeee',
+} as const;
+
+const dark = {
+  foreground: '#f2f2f2',
+  foregroundMuted: '#8e8e8f',
+  foregroundSubtle: '#434347',
+  surface: '#1e1c1e',
+  canvas: '#000000',
+  canvasPrimary: PrimaryRamp[950],
+  border: '#333336',
+  surfaceMuted: '#3a3a3d',
+} as const satisfies Record<keyof typeof light, string>;
+
+export const Theme = { light, dark } as const;
+
+export type BrandColor = keyof typeof Brand;
+export type PrimaryRampStep = keyof typeof PrimaryRamp;
+export type RampColor = `primary${PrimaryRampStep}`;
+export type ThemeColor = keyof typeof light;
+export type ColorName = BrandColor | RampColor | ThemeColor;
+
+export const BrandColors = Object.keys(Brand) as BrandColor[];
+export const RampColors = Object.keys(PrimaryRamp).map((step) => `primary${step}`) as RampColor[];
+export const ThemeColors = Object.keys(light) as ThemeColor[];
+
+// `surfaceMuted` -> `surface-muted`, `primary500` -> `primary-500`: the CSS variable and class name.
+export const cssName = (name: ColorName) => name.replace(/([a-z])([A-Z0-9])/g, '$1-$2').toLowerCase();
+
+// A reference for inline styles: `style={{ background: color('surface') }}`. Follows the theme on its own.
+export const color = (name: ColorName) => `var(--color-${cssName(name)})`;
+
+// Every color's value in one mode, keyed by name. Used to generate the CSS and by `usePalette()`.
+export function colorValues(scheme: keyof typeof Theme): Record<ColorName, string> {
+  const ramp = Object.fromEntries(Object.entries(PrimaryRamp).map(([step, v]) => [`primary${step}`, v]));
+  return { ...Brand, ...ramp, ...Theme[scheme] } as Record<ColorName, string>;
+}

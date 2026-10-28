@@ -1,12 +1,19 @@
 @import 'tailwindcss';
 
-/* Tailwind 4: load the legacy JS config (copied from RN). `presets` and `content` are not read from it. */
-@config '../tailwind.config.js';
-
-/* tailwind.config.js has darkMode: 'class'; v4 needs it declared in CSS. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* The sans font (Satoshi, linked in index.html) comes from `fontFamily.sans` in tailwind.config.js. */
+/* Colors are not defined here. vite.config.ts generates them from src/constants/Colors.ts and injects them
+   at the marker below: a `@theme static` block with every `--color-*` (light values) and a `.dark` block
+   overriding the theme colors. Defining `--color-*` in any CSS fails the build. */
+/* @color-theme */
+
+@theme {
+  --font-sans: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
+  --font-weight-regular: 400;
+  --text-2xs: 10px;
+  --radius-4xl: 1.75rem;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;

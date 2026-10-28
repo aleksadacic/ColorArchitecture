@@ -1,7 +1,8 @@
 # ColorArchitecture
 
-Small Vue 3 + Vite + TypeScript + Tailwind 4 app that reproduces the color architecture of
-`cimicimi-mobile/cimicimi` so it can be studied and refactored in isolation.
+Small Vue 3 + Vite + TypeScript + Tailwind 4 app showing a web color architecture built on Tailwind 4's
+CSS-first conventions. It started as a port of the `cimicimi-mobile/cimicimi` color setup and has since
+been reworked for the web only.
 
 ```bash
 npm install
@@ -9,39 +10,36 @@ npm run dev     # http://localhost:5173
 npm run build   # vue-tsc + vite build
 ```
 
-Each usage method has its own page (hash routes via `vue-router`, defined in `src/router.ts`):
+## How colors work
 
-| Page | Route | Shows |
-|---|---|---|
-| Raw constants | `#/raw` | fixed `Colors` values; the active scheme's `Colors.light` or `Colors.dark` |
-| `usePalette()` | `#/palette` | theme-resolved hex values |
-| Direct Tailwind | `#/tailwind` | primary ramp, `light-`/`dark-` pairs, status and brand classes, semantic tokens |
+- **Values live in TypeScript.** `src/constants/Colors.ts` is the single source of truth: the primary
+  ramp (`PrimaryRamp`), fixed brand and status colors (`Brand`), and the theme colors (`Theme.light` /
+  `Theme.dark`, which must have the same keys). Names are camelCase; CSS and classes use the kebab-case
+  form (`surfaceMuted` -> `--color-surface-muted` -> `bg-surface-muted`, `primary500` -> `bg-primary-500`).
+- **The CSS is generated in memory.** A Vite plugin in `vite.config.ts` builds a `@theme static` block
+  (every color, light values) and a `.dark { ... }` block (theme colors) from `Colors.ts`, and injects
+  them into `src/style.css` at the `/* @color-theme */` marker. No generated file exists on disk, so
+  there is nothing to edit by mistake. Editing `Colors.ts` restarts the dev server and the page reloads.
+- **Colors can't be defined anywhere else.** The same plugin fails the build when any CSS file or Vue
+  `<style>` block defines a `--color-*` variable, and when the marker is missing.
+- **Dark mode overrides variables, not classes.** `App.vue` toggles `.dark` on `<html>`; every class and
+  `var()` follows without a `dark:` variant.
+- **No `tailwind.config.js`, no safelist.** Tailwind 4 reads the theme from the injected CSS, and every
+  class is written out in full so its source scan finds it.
 
-## What is copied (faithful port, bugs included)
+## Pages
 
-| RN source | Here |
-|---|---|
-| `constants/Colors.ts` | `src/constants/Colors.ts` (same values; see deviations) |
-| `tailwind.config.js` | `tailwind.config.js` (`nativewind/preset` and `content` adapted; see deviations) |
-| `global.css` | `src/style.css` (Tailwind 4 entry; HSL variables removed, see deviations) |
-| `hooks/useThemeColor`, `usePalette`, `useEffectiveColorScheme`, `useColorScheme` | `src/hooks/*` as Vue composables (same names; return `ComputedRef`) |
-| `stores/useAppPreferencesStore` (theme part) | `src/stores/useAppPreferencesStore.ts` (ref + localStorage) |
+One page per usage method (hash routes via `vue-router`, `src/router.ts`). Each shows the same sections:
+brand colors, primary ramp, brand colors as text, then theme text, surfaces and borders.
 
-## Tailwind 4 notes
+| Page | Route | Method | Use it for |
+|---|---|---|---|
+| CSS variables | `#/vars` | `style="background: var(--color-surface)"` via `color('surface')` | inline styles; inline SVG (example on the page) |
+| `usePalette()` | `#/palette` | the current theme's hex values from `Colors.ts` | WebGL/shader uniforms, `<canvas>`, chart libraries, SVGs used as images (shader and canvas examples on the page) |
+| Direct Tailwind | `#/tailwind` | `class="bg-surface"` | everything else (the default) |
 
-- `@config '../tailwind.config.js'` loads the legacy JS config unchanged.
-- There is no safelist: every class is written out in full in the source, so Tailwind's scan finds it.
-- `darkMode: 'class'` is re-declared with `@custom-variant dark`; `App.vue` toggles `.dark` on `<html>`.
+`usePalette()` returns the current theme's values straight from `Colors.ts` (no DOM reads), and
+`toRgb()` turns a hex into the `[r, g, b]` 0-1 floats WebGL uniforms take.
 
-## Deliberate deviations from the RN app
-
-- The `light-dark-tertiary` token typo is fixed as `light-foreground-subtle` / `dark-foreground-subtle`.
-- The no-op `dark:` classes and the `usePaletteClass` hook are removed; classes are written directly.
-- The `light-*`/`dark-*` Tailwind tokens and `usePalette` are generated from `Colors` instead of listed by hand.
-- The `primary` 50-950 ramp lives in `Colors.ts` as `PrimaryRamp`; `Colors.primary`, Tailwind and `usePalette()` (`primary50` ... `primary950`) read from it.
-- The safelist is removed; nothing builds class names from variables. On the Direct Tailwind page each class map is checked with `satisfies` against the `Colors` keys, so a new color without a class fails `vue-tsc`.
-- Fixed brand and status colors (`success`, `info`, `warning`, `error`, `hint`, ...) have generated Tailwind classes.
-- Semantic tokens (`bg-canvas`, `text-foreground-muted`, ...) backed by `--theme-*` CSS variables switch with the theme without `dark:` pairs. The demo layout uses them.
-- The hand-copied `rgba()` alpha literals and the unused shadcn HSL variables are removed.
-- Theme keys are renamed by role: `container` -> `canvas`, `background` -> `surface`, `backgroundSoft` -> `surfaceMuted`, `text` -> `foreground`, `textSecondary` -> `foregroundMuted`, `textTertiary` -> `foregroundSubtle` (`border` unchanged).
-- `fontFamily.sans` is Satoshi (the demo's font) with a system fallback stack, instead of `['Nunito']`.
+On the Direct Tailwind page each class map is checked with `satisfies` against the names in `Colors.ts`,
+so a new color without its class fails `vue-tsc`.

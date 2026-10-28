@@ -2,69 +2,49 @@
 import { computed } from 'vue';
 
 import ColorSections from '@/components/ColorSections.vue';
+import CanvasExample from '@/components/examples/CanvasExample.vue';
+import ShaderExample from '@/components/examples/ShaderExample.vue';
+import Section from '@/components/Section.vue';
 import { usePalette } from '@/hooks/usePalette';
-import { brandKeys, byRole, ColorSection, fill, ink, outline, rampSteps } from '@/utils/colorRoles';
+import { methodSections, swatchStyle } from '@/utils/colorRoles';
 
 const palette = usePalette();
 
-const sections = computed<ColorSection[]>(() => {
-  const entries = Object.entries(palette.value) as [string, string][];
-  const brand = entries.filter(([k]) => (brandKeys as string[]).includes(k));
-  const rampKeys = rampSteps.map((step) => `primary${step}`);
-  const themed = entries.filter(([k]) => !(brandKeys as string[]).includes(k) && !rampKeys.includes(k));
-  const note = 'Theme-resolved hex; flips with the toggle.';
-  return [
-    {
-      id: 'palette-brand',
-      title: 'usePalette(): brand colors',
-      code: ':style="{ background: palette.x }"',
-      note: 'Same value in both modes.',
-      items: brand.map(([k, v]) => ({ label: `palette.${k}`, value: v, swatchStyle: fill(v) })),
+const property = { fill: 'background', text: 'color', border: 'borderColor' } as const;
+
+const sections = computed(() =>
+  methodSections({
+    id: 'palette',
+    name: 'usePalette()',
+    code: (n, kind) => `:style="{ ${property[kind]}: palette.${n} }"`,
+    item: (n, kind) => {
+      const v = palette.value[n];
+      return { label: `palette.${n}`, value: v, swatchStyle: swatchStyle(v, kind) };
     },
-    {
-      id: 'palette-ramp',
-      title: 'usePalette(): primary ramp',
-      code: ':style="{ background: palette.primary500 }"',
-      note: 'The full brand ramp as primary50 ... primary950; same in both modes.',
-      items: rampKeys.map((k) => {
-        const v = palette.value[k as keyof typeof palette.value];
-        return { label: `palette.${k}`, value: v, swatchStyle: fill(v) };
-      }),
-    },
-    {
-      id: 'palette-brand-text',
-      title: 'usePalette(): brand colors as text',
-      code: ':style="{ color: palette.x }"',
-      note: 'On the current surface. Same value in both modes, so some (e.g. white) disappear in one of them.',
-      text: true,
-      items: brand.map(([k, v]) => ({ label: `palette.${k}`, value: v, swatchStyle: ink(v) })),
-    },
-    {
-      id: 'palette-text',
-      title: 'usePalette(): text',
-      code: ':style="{ color: palette.foreground }"',
-      note,
-      text: true,
-      items: byRole(themed, 'text').map(([k, v]) => ({ label: `palette.${k}`, value: v, swatchStyle: ink(v) })),
-    },
-    {
-      id: 'palette-surfaces',
-      title: 'usePalette(): surfaces',
-      code: ':style="{ background: palette.surface }"',
-      note,
-      items: byRole(themed, 'surface').map(([k, v]) => ({ label: `palette.${k}`, value: v, swatchStyle: fill(v) })),
-    },
-    {
-      id: 'palette-borders',
-      title: 'usePalette(): borders',
-      code: ':style="{ borderColor: palette.border }"',
-      note,
-      items: byRole(themed, 'border').map(([k, v]) => ({ label: `palette.${k}`, value: v, swatchStyle: outline(v) })),
-    },
-  ];
-});
+  }),
+);
 </script>
 
 <template>
+  <Section
+    id="palette-shader"
+    title="usePalette() → WebGL shader"
+    code=":colors=&quot;[palette.primary, palette.canvasPrimary, palette.canvas]&quot;"
+    note="Shader uniforms are numbers sent to the GPU; they can't read CSS. Two of the three colors are theme colors, so the shader changes with the toggle."
+  >
+    <div class="col-span-full">
+      <ShaderExample :colors="[palette.primary, palette.canvasPrimary, palette.canvas]" />
+    </div>
+  </Section>
+  <Section
+    id="palette-canvas"
+    title="usePalette() → canvas 2D"
+    code="ctx.fillStyle = palette.primary"
+    note="Canvas fillStyle can't resolve var(); the chart redraws when the palette changes."
+  >
+    <div class="col-span-full">
+      <CanvasExample :palette="palette" />
+    </div>
+  </Section>
   <ColorSections :sections="sections" />
 </template>

@@ -1,12 +1,12 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 import PalettePage from '@/pages/PalettePage.vue';
-import RawPage from '@/pages/RawPage.vue';
 import TailwindPage from '@/pages/TailwindPage.vue';
+import VarsPage from '@/pages/VarsPage.vue';
 
 // One page per usage method. Hash history so the static build works without server rewrites.
 export const pages = [
-  { path: '/raw', label: 'Raw constants', component: RawPage },
+  { path: '/vars', label: 'CSS variables', component: VarsPage },
   { path: '/palette', label: 'usePalette()', component: PalettePage },
   { path: '/tailwind', label: 'Direct Tailwind', component: TailwindPage },
 ] as const;
