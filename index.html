@@ -6,15 +6,7 @@
     <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
     <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
     <title>Color Architecture</title>
-    <!-- Sets .dark before the first paint, so a dark page never flashes light while the app loads.
-         Same rule and storage key as src/theme/scheme.ts, which takes over once the app runs. -->
-    <script>
-      try {
-        const s = localStorage.getItem('themeSetting');
-        const dark = s === 'dark' || (s !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
-        document.documentElement.classList.toggle('dark', dark);
-      } catch {}
-    </script>
+    <!-- build/schemeScript.ts injects a script here that sets .dark before the first paint. -->
   </head>
   <body>
     <div id="app"></div>

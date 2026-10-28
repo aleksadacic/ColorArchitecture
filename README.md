@@ -24,8 +24,9 @@ npm run build   # vue-tsc + vite build
   `<style>` block defines a `--color-*` or PrimeVue `--p-*` variable, and when the marker is missing.
 - **Dark mode overrides variables, not classes.** `src/theme/scheme.ts` holds the theme setting
   (system, light or dark, saved in `localStorage`) and toggles `.dark` on `<html>`; every class and `var()`
-  follows without a `dark:` variant. A small script in `index.html` sets the class before the app loads,
-  so a dark page never flashes light.
+  follows without a `dark:` variant. A small script, injected into `index.html` by `build/schemeScript.ts`
+  from the same rule (`src/theme/schemeRule.ts`), sets the class before the app loads, so a dark page never
+  flashes light.
 - **No `tailwind.config.js`, no hand-kept safelist.** Tailwind 4 reads the theme from the injected CSS.
   App code writes every class out in full so Tailwind's source scan finds it. The one exception is the
   Direct Tailwind page, which shows every color: the plugin also lists a `bg-*` and `text-*` class for each
